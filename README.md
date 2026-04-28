@@ -1,46 +1,45 @@
-# claude-code-skills marketplace
+# agent-tools
 
-This repository is a Claude Code plugin marketplace.
+Claude Code plugin marketplace.
 
 ## Add this marketplace
 
 ```text
-/plugin marketplace add lightcodehub/claude-code-skills
+/plugin marketplace add lightcodehub/agent-tools
 ```
 
-## Install the plugin from this marketplace
+## Install plugin
 
 ```text
-/plugin install claude-code-skills@claude-code-skills
+/plugin install design-tools@agent-tools
 ```
 
-## Use the skill
+## Use skill
 
 ```text
-/claude-code-skills:program-design 为订单页新增批量导出能力，先看代码再给设计文档
+/design-tools:program-design 为订单页新增批量导出能力，先看代码再给设计文档
 ```
 
-## Marketplace structure
+## Structure
 
 ```text
-claude-code-skills/
+agent-tools/
 ├── .claude-plugin/
 │   └── marketplace.json
 ├── plugins/
-│   └── claude-code-skills/
+│   └── design-tools/
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       ├── skills/
 │       │   └── program-design/
-│       ├── README.md
-│       └── ...
+│       └── README.md
+├── README.md
 ├── LICENSE
 └── .gitignore
 ```
 
-## Included plugin
+## Included plugins
 
-- `claude-code-skills`
-  - includes the `program-design` skill
+- `design-tools` — includes the `program-design` skill
 
-See `plugins/claude-code-skills/README.md` for plugin details.
+See `plugins/design-tools/README.md` for details.

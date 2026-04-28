@@ -1,0 +1,10 @@
+{
+  "name": "design-tools",
+  "description": "Design workflow plugin — program-design and future design skills.",
+  "version": "1.0.0",
+  "author": {
+    "name": "lightcodehub"
+  },
+  "homepage": "https://github.com/lightcodehub/agent-tools",
+  "license": "MIT"
+}

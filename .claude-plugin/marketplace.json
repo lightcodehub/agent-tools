@@ -1,13 +1,13 @@
 {
-  "name": "claude-code-skills",
-  "description": "Marketplace for reusable Claude Code plugins and skills, starting with the program-design workflow.",
+  "name": "agent-tools",
+  "description": "Marketplace for reusable Claude Code plugins and skills.",
   "owner": {
     "name": "lightcodehub"
   },
   "plugins": [
     {
-      "name": "claude-code-skills",
-      "source": "./plugins/claude-code-skills"
+      "name": "design-tools",
+      "source": "./plugins/design-tools"
     }
   ]
 }
