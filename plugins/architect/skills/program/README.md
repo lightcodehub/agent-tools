@@ -1,6 +1,6 @@
-# program-design
+# program
 
-`/program-design` 是一个先读代码、再出设计文档的 skill。
+`/architect:program` 是一个先读代码、再出设计文档的 skill。
 
 它的目标不是直接写实现代码，而是把需求整理成一份可直接交给 AI 或工程师继续落地的设计文档。文档重点是：模块拆分、API、流程图、数据库设计、前端组件设计、单元测试设计。
 
@@ -112,7 +112,7 @@
 ## 目录结构
 
 ```text
-skills/program-design/
+skills/program/
 ├── SKILL.md
 ├── README.md
 ├── templates/
@@ -141,7 +141,7 @@ skills/program-design/
 ### 示例 1：单模块后端需求
 
 ```text
-/program-design 为用户资料新增昵称更新能力，先看现有 user 模块代码，再给我设计文档
+/architect:program 为用户资料新增昵称更新能力，先看现有 user 模块代码，再给我设计文档
 ```
 
 预期输出重点：
@@ -154,7 +154,7 @@ skills/program-design/
 ### 示例 2：前后端联动需求
 
 ```text
-/program-design 为订单页新增批量导出能力，前后端都要考虑，先查现有组件和导出相关逻辑
+/architect:program 为订单页新增批量导出能力，前后端都要考虑，先查现有组件和导出相关逻辑
 ```
 
 预期输出重点：
@@ -180,4 +180,4 @@ skills/program-design/
 
 ## 建议用法
 
-对复杂需求，先用 `/program-design`，等设计文档稳定后，再进入实现阶段。这样可以显著减少边做边改、返工和接口跑偏。
+对复杂需求，先用 `/architect:program`，等设计文档稳定后，再进入实现阶段。这样可以显著减少边做边改、返工和接口跑偏。
