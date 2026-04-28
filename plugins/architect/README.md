@@ -1,44 +1,44 @@
-# design-tools
+# architect
 
-Claude Code plugin that bundles design workflow skills, starting with `program-design`.
+Claude Code plugin that bundles architecture design skills, starting with `program`.
 
 ## Install
 
 ```text
 /plugin marketplace add lightcodehub/agent-tools
-/plugin install design-tools@agent-tools
+/plugin install architect@agent-tools
 ```
 
 ## Use
 
 ```text
-/design-tools:program-design 为订单页新增批量导出能力，先看代码再给设计文档
+/architect:program 为订单页新增批量导出能力，先看代码再给设计文档
 ```
 
 ## Local development
 
 ```bash
-claude --plugin-dir ./plugins/design-tools
+claude --plugin-dir ./plugins/architect
 ```
 
 ```text
-/design-tools:program-design 测试需求
+/architect:program 测试需求
 ```
 
 ## Included skills
 
-- `program-design`
+- `program`
   - Read relevant code first, then output structured design documents
   - API definitions, Mermaid flowcharts, unit test design, DB design, componentized frontend design
 
 ## Structure
 
 ```text
-plugins/design-tools/
+plugins/architect/
 ├── .claude-plugin/
 │   └── plugin.json
 ├── skills/
-│   └── program-design/
+│   └── program/
 │       ├── SKILL.md
 │       ├── README.md
 │       ├── templates/
@@ -49,9 +49,9 @@ plugins/design-tools/
 ## Uninstall
 
 ```text
-/plugin uninstall design-tools
+/plugin uninstall architect
 ```
 
 ## More details
 
-See `skills/program-design/README.md` for the full skill spec and examples.
+See `skills/program/README.md` for the full skill spec and examples.

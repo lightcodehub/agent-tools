@@ -6,8 +6,8 @@
   },
   "plugins": [
     {
-      "name": "design-tools",
-      "source": "./plugins/design-tools"
+      "name": "architect",
+      "source": "./plugins/architect"
     }
   ]
 }

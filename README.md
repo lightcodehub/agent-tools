@@ -11,13 +11,13 @@ Claude Code plugin marketplace.
 ## Install plugin
 
 ```text
-/plugin install design-tools@agent-tools
+/plugin install architect@agent-tools
 ```
 
 ## Use skill
 
 ```text
-/design-tools:program-design 为订单页新增批量导出能力，先看代码再给设计文档
+/architect:program 为订单页新增批量导出能力，先看代码再给设计文档
 ```
 
 ## Structure
@@ -27,11 +27,11 @@ agent-tools/
 ├── .claude-plugin/
 │   └── marketplace.json
 ├── plugins/
-│   └── design-tools/
+│   └── architect/
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       ├── skills/
-│       │   └── program-design/
+│       │   └── program/
 │       └── README.md
 ├── README.md
 ├── LICENSE
@@ -40,6 +40,6 @@ agent-tools/
 
 ## Included plugins
 
-- `design-tools` — includes the `program-design` skill
+- `architect` — includes the `program` skill
 
-See `plugins/design-tools/README.md` for details.
+See `plugins/architect/README.md` for details.

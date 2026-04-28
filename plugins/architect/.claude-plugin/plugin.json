@@ -1,6 +1,6 @@
 {
-  "name": "design-tools",
-  "description": "Design workflow plugin — program-design and future design skills.",
+  "name": "architect",
+  "description": "Architecture design plugin — program design and future architecture skills.",
   "version": "1.0.0",
   "author": {
     "name": "lightcodehub"
