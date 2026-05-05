@@ -1,0 +1,10 @@
+{
+  "name": "engineer",
+  "description": "Engineering execution plugin — turn design docs into runnable, tested code. Starts with fullstack.",
+  "version": "1.0.0",
+  "author": {
+    "name": "lightcodehub"
+  },
+  "homepage": "https://github.com/lightcodehub/agent-tools",
+  "license": "MIT"
+}
