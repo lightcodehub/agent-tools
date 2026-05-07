@@ -1,6 +1,18 @@
 # agent-tools
 
-Claude Code plugin marketplace.
+Claude Code plugin marketplace — `designer` 负责设计，`engineer` 负责实现，形成完整的"设计→实现"闭环。
+
+## Layering
+
+| designer | engineer |
+| --- | --- |
+| `architect` 架构设计 | `fullstack` 全栈实现 |
+| `ui` UI 设计（待扩展） | `ios` iOS 实现（待扩展） |
+| `product` 产品设计（待扩展） | `android` Android 实现（待扩展） |
+| ... | `backend` 后端实现（待扩展） |
+| | ... |
+
+`designer` 统一收敛所有设计角色，`engineer` 统一收敛所有实现角色。两者抽象层级对等，设计文档是 designer 产出、engineer 消费的中间契约。
 
 ## Add this marketplace
 
@@ -11,14 +23,14 @@ Claude Code plugin marketplace.
 ## Install plugin
 
 ```text
-/plugin install architect@agent-tools
+/plugin install designer@agent-tools
 /plugin install engineer@agent-tools
 ```
 
 ## Use skill
 
 ```text
-/architect:program 为订单页新增批量导出能力，先看代码再给设计文档
+/designer:architect 为订单页新增批量导出能力，先看代码再给设计文档
 /engineer:fullstack 按这份设计文档实现昵称更新并写测试
 ```
 
@@ -29,11 +41,11 @@ agent-tools/
 ├── .claude-plugin/
 │   └── marketplace.json
 ├── plugins/
-│   ├── architect/
+│   ├── designer/
 │   │   ├── .claude-plugin/
 │   │   │   └── plugin.json
 │   │   ├── skills/
-│   │   │   └── program/
+│   │   │   └── architect/
 │   │   └── README.md
 │   └── engineer/
 │       ├── .claude-plugin/
@@ -48,7 +60,7 @@ agent-tools/
 
 ## Included plugins
 
-- `architect` — includes the `program` skill (read code → output design doc)
-- `engineer` — includes the `fullstack` skill (implement design doc → runnable code + test report)
+- `designer` — 目前包含 `architect`（架构设计），后续扩展 `ui`、`product` 等
+- `engineer` — 目前包含 `fullstack`（全栈实现），后续扩展 `ios`、`android`、`backend` 等
 
-See `plugins/architect/README.md` and `plugins/engineer/README.md` for details.
+插件详情见 `plugins/designer/README.md` 和 `plugins/engineer/README.md`。

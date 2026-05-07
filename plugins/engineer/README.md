@@ -1,6 +1,6 @@
 # engineer
 
-Claude Code plugin that bundles engineering execution skills, starting with `fullstack`.
+工程实现类 skill 插件，目前包含全栈实现，后续扩展 iOS、Android、后端等。分层计划见顶层 [README](../../README.md#layering)。
 
 ## Install
 
@@ -12,7 +12,7 @@ Claude Code plugin that bundles engineering execution skills, starting with `ful
 ## Use
 
 ```text
-/engineer:fullstack <设计文档路径或内容>
+/engineer:fullstack 按这份设计文档实现用户昵称更新并写测试
 ```
 
 ## Local development
@@ -27,10 +27,10 @@ claude --plugin-dir ./plugins/engineer
 
 ## Included skills
 
-- `fullstack`
-  - Turn design docs into runnable, fully-tested code
-  - Covers error handling, key-path logging, and test reports
-  - Future: `ios`, `android`, `web`, `backend`
+- `fullstack` — 全栈实现：按设计文档落地可编译/可运行的代码，覆盖异常处理、关键路径日志、单元测试与测试报告
+- `ios` — 待扩展：iOS 实现
+- `android` — 待扩展：Android 实现
+- `backend` — 待扩展：后端实现
 
 ## Structure
 
@@ -60,4 +60,4 @@ plugins/engineer/
 
 ## More details
 
-See `skills/fullstack/README.md` for the full skill spec and examples.
+详见 `skills/fullstack/README.md`。

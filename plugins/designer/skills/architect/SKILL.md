@@ -8,7 +8,7 @@ effort: high
 allowed-tools: Read Bash(find *) Bash(grep *)
 ---
 
-# /program
+# /designer:architect
 
 根据用户需求先阅读相关代码，再输出可直接交给 AI 或工程师实施的结构化设计文档。
 
@@ -34,7 +34,7 @@ allowed-tools: Read Bash(find *) Bash(grep *)
 
 ## 触发方式
 
-- 显式：`/architect:program <需求描述>`
+- 显式：`/designer:architect <需求描述>`
 - 自然语言意图匹配：
   - "先看代码再给设计方案"
   - "先做程序设计，不要直接写代码"

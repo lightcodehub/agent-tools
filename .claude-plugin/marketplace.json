@@ -6,8 +6,8 @@
   },
   "plugins": [
     {
-      "name": "architect",
-      "source": "./plugins/architect"
+      "name": "designer",
+      "source": "./plugins/designer"
     },
     {
       "name": "engineer",

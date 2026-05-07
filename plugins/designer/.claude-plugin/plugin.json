@@ -1,0 +1,10 @@
+{
+  "name": "designer",
+  "description": "Design plugin — architecture design and future design skills (UI, product, etc.).",
+  "version": "1.0.0",
+  "author": {
+    "name": "lightcodehub"
+  },
+  "homepage": "https://github.com/lightcodehub/agent-tools",
+  "license": "MIT"
+}

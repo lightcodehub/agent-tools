@@ -1,10 +1,10 @@
 # 单模块落地示例：用户资料昵称更新
 
-> 本示例演示 `/engineer:fullstack` 如何基于一份设计文档（来自 `/architect:program` 的输出）逐单元实现代码并产出测试报告。
+> 本示例演示 `/engineer:fullstack` 如何基于一份设计文档（来自 `/designer:architect` 的输出）逐单元实现代码并产出测试报告。
 
 ## 输入设计文档
 
-使用 `architect/program/examples/basic.md`（为用户资料新增昵称更新能力）作为输入。
+使用 `designer/architect/examples/basic.md`（为用户资料新增昵称更新能力）作为输入。
 
 ## Step 1: 设计文档校验
 

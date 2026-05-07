@@ -8,7 +8,7 @@
 
 适合这些场景：
 
-- 已有一份设计文档（`/architect:program` 输出或手写），需要按文档写代码
+- 已有一份设计文档（`/designer:architect` 输出或手写），需要按文档写代码
 - 跨模块改造经过设计阶段，需严格按方案执行
 - 希望确保实现与设计文档的 API、数据结构、测试用例一致
 
@@ -39,18 +39,18 @@
 - 不自动 commit / push / 创建 PR
 - 不经批准不修改既有代码
 
-## 与 architect:program 的协同
+## 与 designer:architect 的协同
 
 ```mermaid
 flowchart LR
-    A[用户需求] --> B[/architect:program]
+    A[用户需求] --> B[/designer:architect]
     B --> C[设计文档]
     C --> D[/engineer:fullstack]
     D --> E[可运行代码 + 测试]
     D -.未决问题/文档缺陷.-> B
 ```
 
-先用 `/architect:program` 产出设计文档，再用 `/engineer:fullstack` 落地实现，形成完整的"设计→实现"闭环。
+先用 `/designer:architect` 产出设计文档，再用 `/engineer:fullstack` 落地实现，形成完整的"设计→实现"闭环。
 
 ## 使用示例
 
@@ -75,7 +75,7 @@ flowchart LR
 ## 强约束
 
 ### 设计文档是强制前置条件
-没有设计文档不得编码。如果用户没有提供，必须要求先提供或先用 `/architect:program` 生成。
+没有设计文档不得编码。如果用户没有提供，必须要求先提供或先用 `/designer:architect` 生成。
 
 ### 既有代码修改需批准
 涉及修改已有代码，必须先说明原因、影响范围和风险，与用户讨论并获批准后才能动手。

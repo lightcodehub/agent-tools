@@ -23,7 +23,7 @@ allowed-tools: Read Edit Write Bash Glob Grep
 ## 适用场景
 
 仅在以下场景使用：
-- 已存在设计文档（`/architect:program` 输出或手写），需要按文档落地代码
+- 已存在设计文档（`/designer:architect` 输出或手写），需要按文档落地代码
 - 跨模块改造已经过设计阶段，需严格按方案执行
 - 用户明确要求"按设计文档实现"
 
@@ -53,7 +53,7 @@ allowed-tools: Read Edit Write Bash Glob Grep
 执行时必须按以下顺序进行，不得跳步：
 
 ### 1. 设计文档校验
-- 完整读取设计文档；若未提供，停止编码并要求用户提供或先用 `/architect:program` 生成。
+- 完整读取设计文档；若未提供，停止编码并要求用户提供或先用 `/designer:architect` 生成。
 - 检查文档是否覆盖：模块拆分 / API / 数据结构 / 关键流程 / 测试要求。
 
 ### 2. 合理性快速校验
