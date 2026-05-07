@@ -58,4 +58,4 @@ plugins/designer/
 
 ## More details
 
-详见 `skills/architect/README.md`。
+详见 [skills/architect/README.md](skills/architect/README.md)。

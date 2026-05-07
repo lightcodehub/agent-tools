@@ -60,4 +60,4 @@ plugins/engineer/
 
 ## More details
 
-详见 `skills/fullstack/README.md`。
+详见 [skills/fullstack/README.md](skills/fullstack/README.md)。

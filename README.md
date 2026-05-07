@@ -63,4 +63,4 @@ agent-tools/
 - `designer` — 目前包含 `architect`（架构设计），后续扩展 `ui`、`product` 等
 - `engineer` — 目前包含 `fullstack`（全栈实现），后续扩展 `ios`、`android`、`backend` 等
 
-插件详情见 `plugins/designer/README.md` 和 `plugins/engineer/README.md`。
+插件详情见 [plugins/designer/README.md](plugins/designer/README.md) 和 [plugins/engineer/README.md](plugins/engineer/README.md)。
