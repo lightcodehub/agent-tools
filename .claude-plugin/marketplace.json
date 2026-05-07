@@ -8,6 +8,10 @@
     {
       "name": "architect",
       "source": "./plugins/architect"
+    },
+    {
+      "name": "engineer",
+      "source": "./plugins/engineer"
     }
   ]
 }
