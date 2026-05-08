@@ -44,9 +44,9 @@
 
 ```mermaid
 flowchart LR
-    A[用户需求] --> B[/designer:architect]
+    A[用户需求] --> B["/designer:architect"]
     B --> C[设计文档]
-    C --> D[/engineer:fullstack]
+    C --> D["/engineer:fullstack"]
     D --> E[可运行代码 + 测试]
     D -.未决问题/文档缺陷.-> B
 ```
