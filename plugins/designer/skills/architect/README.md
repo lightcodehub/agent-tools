@@ -25,13 +25,10 @@
 
 1. 先理解你的需求
 2. 搜索并阅读相关代码
-3. 识别当前项目里的：
-   - 测试框架
-   - 测试目录约定
-   - 组件目录
-   - 组件化工具集中存放位置
-4. 输出结构化设计文档
-5. 自检，避免漏掉 API、流程图、测试、数据库或组件设计
+3. 识别当前项目里的测试框架、测试目录约定、组件目录
+4. 按业务逻辑划分模块，检测循环依赖
+5. 输出模块化设计文档（总文档 + 每个模块独立文档）
+6. 自检
 
 ## 这个 skill 不会做什么
 
@@ -52,18 +49,17 @@
 - 是否存在未决问题
 
 ### 2. 完整设计文档
-完整文档严格按模板输出，包含 10 个章节：
 
-1. 背景与目标
-2. 范围 / 非范围
-3. 现状与代码证据
-4. 方案设计
-5. 影响面与兼容性
-6. 风险与回滚
-7. 单元测试设计
-8. 实施计划
-9. 验收标准
-10. 未决问题
+模块化输出，结构如下：
+
+```
+designs/
+├── index.md              ← 总设计文档（背景/范围/证据/模块索引/依赖图/跨模块约定/风险/未决问题）
+└── {module-name}/
+    └── index.md          ← 模块设计文档（概述/流程/API/数据结构/DB/组件/测试/实施计划/验收）
+```
+
+每个模块独立一个文件夹，按业务逻辑划分。总文档含模块依赖图和循环依赖检查结果。模块间通过相对链接引用。
 
 ## 文档的强约束
 
@@ -116,25 +112,29 @@ skills/architect/
 ├── SKILL.md
 ├── README.md
 ├── templates/
-│   ├── design-doc.md
+│   ├── design-index.md
+│   ├── design-module.md
 │   └── checklist.md
 └── examples/
-    ├── basic.md
-    └── cross-module.md
+    ├── index.md
+    ├── task/
+    │   └── index.md
+    └── csv/
+        └── index.md
 ```
 
 ## 文件说明
 
 - `SKILL.md`
   - 给 Claude Code 直接执行的规约
-- `templates/design-doc.md`
-  - 设计文档模板
+- `templates/design-index.md`
+  - 总设计文档模板（模块化设计入口）
+- `templates/design-module.md`
+  - 模块设计文档模板（每个业务模块独立使用）
 - `templates/checklist.md`
   - 输出前自检清单
-- `examples/basic.md`
-  - 单模块示例
-- `examples/cross-module.md`
-  - 跨模块示例
+- `examples/` — 订单导出设计示例
+  - `index.md` 总设计文档，`task/index.md` 和 `csv/index.md` 为两个业务模块，含依赖引用与循环检测
 
 ## 使用示例
 

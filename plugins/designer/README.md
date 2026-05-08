@@ -43,11 +43,15 @@ plugins/designer/
         ├── SKILL.md
         ├── README.md
         ├── templates/
-        │   ├── design-doc.md
+        │   ├── design-index.md
+        │   ├── design-module.md
         │   └── checklist.md
         └── examples/
-            ├── basic.md
-            └── cross-module.md
+            ├── index.md
+            ├── task/
+            │   └── index.md
+            └── csv/
+                └── index.md
 ```
 
 ## Uninstall
