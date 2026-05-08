@@ -68,6 +68,7 @@ allowed-tools: Read Edit Write Bash Glob Grep
 ### 4. 代码落地
 - 严格按文档章节顺序逐单元实现。
 - 命名与风格沿用项目既有约定（先扫描项目再写代码）。
+- 使用项目内已有库或工具时，优先检查 `.claude/skills/` 下是否有对应 skill：有则调用 skill 了解其能力边界和用法，无 skill 时才直接阅读源码。
 - 必含：符合对应编程语言标准规范的注释（如 JSDoc/JavaDoc/Docstring 等）、基本异常处理、关键路径日志。
 - 涉及既有代码修改时，必须说明修改原因和影响范围，与用户讨论并获得批准后方可动手。
 - 严禁：写"看似能跑但不严谨"的代码、忽略边界条件、留 TODO 占位代码。
@@ -85,6 +86,12 @@ allowed-tools: Read Edit Write Bash Glob Grep
 
 ### 7. 交付前自检
 - 严格对照 `templates/implementation-checklist.md`。
+
+### 8. 库/工具的 skill 编写
+- 如果本次实现了可复用的库或工具（非一次性胶水代码），使用 `templates/skill-writing-template.md` 描述其能力和用法。
+- 能力描述完成后，为该项目编写或更新对应的内部 skill 文档（如 `.claude/skills/{skill-name}/SKILL.md`），让团队其他成员可以通过 skill 体系发现和使用它。
+- 如果库/工具的某项能力依赖脚本才能运行，在 skill 文档中明确写出或直接编写对应脚本；无此类依赖则跳过。
+- 如果实现过程中修改了已有库/工具的能力或接口，必须同步更新其对应的 skill 文档，保持 skill 与实际代码一致。
 
 ## 强制规则
 
@@ -120,6 +127,9 @@ allowed-tools: Read Edit Write Bash Glob Grep
 ### 7. 既有代码修改规则
 涉及修改既有代码时，必须说明修改原因、影响范围和潜在风险，与用户讨论并获得批准后实施。未经批准不得改动。
 
+### 8. 库/工具 skill 编写规则
+本次实现如果产出了可复用的库或工具，必须使用 `templates/skill-writing-template.md` 描述其能力和用法，并基于能力描述为该项目编写或更新对应的内部 skill 文档，确保团队其他成员可以通过 skill 体系发现和使用它。如果能力依赖脚本才能运行，需在 skill 文档中体现或直接编写对应脚本；无依赖则不做要求。
+
 ## 输出格式
 
 ### 聊天摘要
@@ -146,6 +156,7 @@ allowed-tools: Read Edit Write Bash Glob Grep
 - 异常处理与关键路径日志已就位
 - 测试报告已产出（工具原生或自定义），与设计文档测试用例逐条对应
 - 未决问题与文档偏差已回报
+- 如产出了可复用库/工具，能力描述和对应的内部 skill 文档已就位
 
 ## 禁止事项
 

@@ -29,6 +29,7 @@
 5. 即时写测试并运行（每完成一个独立单元就测）
 6. 产出测试报告（优先用测试工具原生报告，不支持时用自定义模板）
 7. 自检后交付
+8. 如果产出了可复用库/工具，编写能力描述和对应的 skill
 
 ## 这个 skill 不会做什么
 
@@ -95,7 +96,8 @@ skills/fullstack/
 ├── templates/
 │   ├── pre-coding-questions.md
 │   ├── implementation-checklist.md
-│   └── test-report-template.md
+│   ├── test-report-template.md
+│   └── skill-writing-template.md
 └── examples/
     ├── basic.md
     └── cross-module.md
@@ -111,6 +113,8 @@ skills/fullstack/
   - 交付前自检清单
 - `templates/test-report-template.md`
   - 自定义测试报告模板（仅测试工具无内置报告能力时使用）
+- `templates/skill-writing-template.md`
+  - 库/工具能力描述模板，产出可复用库/工具时使用
 - `examples/basic.md`
   - 单模块实现示例
 - `examples/cross-module.md`
