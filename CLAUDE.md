@@ -13,7 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 目录约定
 
-```
+```bash
 plugins/{plugin}/
 ├── .claude-plugin/plugin.json   # 插件元信息（name, version, description）
 ├── README.md
@@ -34,7 +34,7 @@ description: 一句话描述
 when_to_use: 触发条件描述
 argument-hint: <参数提示>
 effort: high|medium|low
-allowed-tools: Read Bash(find *) Bash(grep *)  # 或 Read Edit Write Bash Glob Grep
+allowed-tools: Read Bash(find *) Bash(grep *) # 或 Read Edit Write Bash Glob Grep
 ---
 ```
 

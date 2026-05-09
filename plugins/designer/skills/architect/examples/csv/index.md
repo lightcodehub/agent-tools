@@ -1,7 +1,11 @@
 # 模块：csv
 
-> 最后更新: 2026-05-08
+> 设计时间: 2026-05-08
+>
+> 实施时间: —
+>
 > 所属设计: [订单批量导出](../index.md)
+>
 > 模块状态: ⏳ 待实现
 
 ## 1. 模块概述
@@ -9,13 +13,14 @@
 **模块职责**: 异步消费导出任务，根据筛选条件生成 CSV 文件并更新任务状态。
 
 **业务边界**:
+
 - 负责: 从 job runner 拉取任务、查询订单、生成 CSV、上传文件、更新状态
 - 不负责: 任务创建与查询接口（由 task 模块负责）
 
 ### 1.1 依赖说明
 
-| 依赖模块 | 依赖内容 | 引用章节 |
-|----------|----------|----------|
+| 依赖模块                 | 依赖内容                                   | 引用章节                   |
+| ------------------------ | ------------------------------------------ | -------------------------- |
 | [task](../task/index.md) | `ExportTask` 类型、`order_export_tasks` 表 | §4 数据结构、§5 数据库设计 |
 
 > 实施前提：task 模块的数据结构和表已落地。
@@ -50,17 +55,17 @@ flowchart TD
 
 #### `processExportTask(taskId: string): Promise<void>`
 
-| 参数 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| taskId | string | 是 | 待处理的导出任务 ID |
+| 参数   | 类型   | 必填 | 说明                |
+| ------ | ------ | ---- | ------------------- |
+| taskId | string | 是   | 待处理的导出任务 ID |
 
 **副作用**: 更新 `order_export_tasks` 表状态和文件地址
 
 #### `generateCSV(filters: OrderFilters): Promise<ReadableStream>`
 
-| 参数 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| filters | OrderFilters | 是 | 筛选条件 |
+| 参数    | 类型         | 必填 | 说明     |
+| ------- | ------------ | ---- | -------- |
+| filters | OrderFilters | 是   | 筛选条件 |
 
 **返回**: `Promise<ReadableStream>` — CSV 文件流
 
@@ -87,44 +92,51 @@ flowchart TD
 
 #### `processExportTask` 测试
 
-| 用例 | 输入 | 预期输出 | 类型 | 状态 |
-|------|------|----------|------|------|
-| 正常路径 - 处理成功 | `taskId='1'`, status=pending | status → running → success + fileUrl | happy path | ⏳ |
-| 边界 - 空结果集 | filters 匹配 0 条 | 生成仅含表头的 CSV | boundary | ⏳ |
-| 异常 - CSV 生成失败 | 模拟文件写入错误 | status → failed + errorMessage | error | ⏳ |
-| 边界 - 已处理任务 | status=success | 跳过不处理 | boundary | ⏳ |
+| 用例                | 输入                         | 预期输出                             | 类型       | 状态      |
+| ------------------- | ---------------------------- | ------------------------------------ | ---------- | --------- |
+| 正常路径 - 处理成功 | `taskId='1'`, status=pending | status → running → success + fileUrl | happy path | ⏳ 待实现 |
+| 边界 - 空结果集     | filters 匹配 0 条            | 生成仅含表头的 CSV                   | boundary   | ⏳ 待实现 |
+| 异常 - CSV 生成失败 | 模拟文件写入错误             | status → failed + errorMessage       | error      | ⏳ 待实现 |
+| 边界 - 已处理任务   | status=success               | 跳过不处理                           | boundary   | ⏳ 待实现 |
 
 #### `generateCSV` 测试
 
-| 用例 | 输入 | 预期输出 | 类型 | 状态 |
-|------|------|----------|------|------|
-| 正常路径 | 3 条订单数据 | 含表头 + 3 行数据的 CSV 流 | happy path | ⏳ |
-| 边界 - 大量数据 | 10000 条订单 | 流式输出不 OOM | boundary | ⏳ |
+| 用例            | 输入         | 预期输出                   | 类型       | 状态      |
+| --------------- | ------------ | -------------------------- | ---------- | --------- |
+| 正常路径        | 3 条订单数据 | 含表头 + 3 行数据的 CSV 流 | happy path | ⏳ 待实现 |
+| 边界 - 大量数据 | 10000 条订单 | 流式输出不 OOM             | boundary   | ⏳ 待实现 |
 
 ### 8.3 测试文件规划
 
-| 测试文件 | 覆盖目标 |
-|----------|----------|
+| 测试文件                                  | 覆盖目标                     |
+| ----------------------------------------- | ---------------------------- |
 | `server/jobs/order-export.worker.test.ts` | `processExportTask` 状态流转 |
-| `server/jobs/order-export.csv.test.ts` | `generateCSV` 生成逻辑 |
+| `server/jobs/order-export.csv.test.ts`    | `generateCSV` 生成逻辑       |
 
 ## 9. 实施计划
 
-| 步骤 | 内容 | 涉及文件 | 依赖 | 状态 |
-|------|------|----------|------|------|
-| 1 | 实现 `generateCSV` | `server/jobs/order-export.csv.ts` | task 步骤 3 | ⏳ |
-| 2 | 实现 worker 主逻辑 | `server/jobs/order-export.worker.ts` | 步骤 1 | ⏳ |
-| 3 | 注册 worker 到 job runner | `server/jobs/runner.ts` | 步骤 2 | ⏳ |
-| 4 | 编写单元测试 | `server/jobs/*.test.ts` | 步骤 3 | ⏳ |
-| 5 | 运行测试验证 | `package.json` | 步骤 4 | ⏳ |
+| 步骤 | 内容                      | 涉及文件                             | 依赖        | 状态      |
+| ---- | ------------------------- | ------------------------------------ | ----------- | --------- |
+| 1    | 实现 `generateCSV`        | `server/jobs/order-export.csv.ts`    | task 步骤 3 | ⏳ 待实现 |
+| 2    | 实现 worker 主逻辑        | `server/jobs/order-export.worker.ts` | 步骤 1      | ⏳ 待实现 |
+| 3    | 注册 worker 到 job runner | `server/jobs/runner.ts`              | 步骤 2      | ⏳ 待实现 |
+| 4    | 编写单元测试              | `server/jobs/*.test.ts`              | 步骤 3      | ⏳ 待实现 |
+| 5    | 运行测试验证              | `package.json`                       | 步骤 4      | ⏳ 待实现 |
 
 > 依赖 task 步骤 3：确保 service 层含 ExportTask 类型和 repository
 
 ## 10. 验收标准
 
-| # | 验收项 | 验证方式 | 状态 |
-|---|--------|----------|------|
-| 1 | worker 成功处理 pending 任务 | mock 任务记录验证状态流转 | ⏳ |
-| 2 | CSV 格式正确 | 验证文件内容含表头和数据行 | ⏳ |
-| 3 | 失败任务记录错误信息 | 模拟异常验证 errorMessage | ⏳ |
-| 4 | 单元测试全部通过 | 运行 Vitest | ⏳ |
+| #   | 验收项                       | 验证方式                   | 状态      |
+| --- | ---------------------------- | -------------------------- | --------- |
+| 1   | worker 成功处理 pending 任务 | mock 任务记录验证状态流转  | ⏳ 待实现 |
+| 2   | CSV 格式正确                 | 验证文件内容含表头和数据行 | ⏳ 待实现 |
+| 3   | 失败任务记录错误信息         | 模拟异常验证 errorMessage  | ⏳ 待实现 |
+| 4   | 单元测试全部通过             | 运行 Vitest                | ⏳ 待实现 |
+
+## 11. 未决问题
+
+| #   | 问题                             | 影响范围 | 需要谁确认 |
+| --- | -------------------------------- | -------- | ---------- |
+| 1   | 大文件上传是否需要分片           | 文件存储 | 运维       |
+| 2   | CSV 导出是否需要支持自定义分隔符 | 文件格式 | 产品       |

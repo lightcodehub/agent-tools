@@ -4,13 +4,13 @@ Claude Code plugin marketplace — `designer` 负责设计，`engineer` 负责�
 
 ## Layering
 
-| designer | engineer |
-| --- | --- |
-| `architect` 架构设计 | `fullstack` 全栈实现 |
-| `ui` UI 设计（待扩展） | `ios` iOS 实现（待扩展） |
+| designer                     | engineer                         |
+| ---------------------------- | -------------------------------- |
+| `architect` 架构设计         | `fullstack` 全栈实现             |
+| `ui` UI 设计（待扩展）       | `ios` iOS 实现（待扩展）         |
 | `product` 产品设计（待扩展） | `android` Android 实现（待扩展） |
-| ... | `backend` 后端实现（待扩展） |
-| | ... |
+| ...                          | `backend` 后端实现（待扩展）     |
+|                              | ...                              |
 
 `designer` 统一收敛所有设计角色，`engineer` 统一收敛所有实现角色。两者抽象层级对等，设计文档是 designer 产出、engineer 消费的中间契约。
 

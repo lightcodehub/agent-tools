@@ -46,10 +46,8 @@ plugins/engineer/
         ├── templates/
         │   ├── pre-coding-questions.md
         │   ├── implementation-checklist.md
-        │   └── test-report-template.md
-        └── examples/
-            ├── basic.md
-            └── cross-module.md
+        │   ├── test-report-template.md
+        │   └── skill-writing-template.md
 ```
 
 ## Uninstall
