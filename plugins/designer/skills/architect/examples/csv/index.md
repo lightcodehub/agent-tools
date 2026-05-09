@@ -29,6 +29,15 @@
 
 无
 
+### 1.3 外部依赖
+
+#### 文件存储服务
+
+| 依赖模块 | 依赖 API                                                                              | 不可用时策略      |
+| -------- | ------------------------------------------------------------------------------------- | ----------------- |
+| upload   | [POST /api/v2/upload](../external-service/storage/upload.md#post-api-v2-upload)       | mock 返回 fileUrl |
+| download | [POST /api/v2/sign-url](../external-service/storage/download.md#post-api-v2-sign-url) | mock 返回签名 URL |
+
 ## 2. 核心流程
 
 ```mermaid

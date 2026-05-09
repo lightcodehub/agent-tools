@@ -35,6 +35,25 @@
 
 （无则写"无"）
 
+### 1.3 外部依赖
+
+#### {服务A}
+
+| 依赖模块 | 依赖 API                                                                   | 不可用时策略     |
+| -------- | -------------------------------------------------------------------------- | ---------------- |
+| {charge} | [POST /v1/charges](../external-service/{a}/charge.md#post-v1-charges)      | {兜底/降级/mock} |
+| {charge} | [GET /v1/charges/:id](../external-service/{a}/charge.md#get-v1-charges-id) | {兜底/降级/mock} |
+
+#### {服务B}
+
+| 依赖模块 | 依赖 API                                                      | 不可用时策略     |
+| -------- | ------------------------------------------------------------- | ---------------- |
+| {push}   | [POST /v1/push](../external-service/{b}/push.md#post-v1-push) | {兜底/降级/mock} |
+
+> 外部服务放 `design-doc/external-service/{name}/`：`index.md` 服务总览 + `{module}.md` API 模块，锚点为 `{method}-{path}`。
+
+（无外部服务依赖则写"无"）
+
 ## 2. 核心流程
 
 ```mermaid
