@@ -95,6 +95,7 @@ allowed-tools: Read Bash(find *) Bash(grep *)
 6. **自检**
    - 严格对照 `templates/checklist.md`
    - 验证文档一致性：检查 `design-doc/` 下所有设计文档，确保模块索引与文档对应、依赖图一致、相对链接有效、章节编号无跳空、跨文档引用不失效
+   - 对所有输出文档运行 prettier 格式化；若未安装，征得用户同意后安装
 
 ## 强制规则
 
