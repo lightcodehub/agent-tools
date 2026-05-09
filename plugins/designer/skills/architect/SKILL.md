@@ -77,7 +77,7 @@ allowed-tools: Read Bash(find *) Bash(grep *)
    - 单一模块也遵循模块化结构，不降级为单文件
 4. **方案生成**
    - 跨模块共享数据结构在定义方模块文档中定义，其他模块通过链接引用
-   - 识别模块对外部服务（跨项目）的依赖，在 `design-doc/external-service/{name}/` 下建立目录，使用 `templates/api-service.md`（服务总览）和 `templates/api-module.md`（API 模块）整理，模块文档 §1.3 通过链接引用具体 API
+   - 识别模块对外部服务（跨项目）的依赖，在 `design-doc/external-service/{name}/` 下建立目录，使用 `templates/api-service.md`（服务总览）和 `templates/api-module.md`（API 模块）整理；API 模块文件名为业务名（如 `auth.md`、`video.md`），模块文档 §1.3 通过链接引用具体 API
    - 输出核心流程图
    - 输出 API 与契约
    - 输出数据结构
