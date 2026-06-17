@@ -1,0 +1,32 @@
+{
+  "name": "agent-tools",
+  "interface": {
+    "displayName": "Agent Tools"
+  },
+  "plugins": [
+    {
+      "name": "designer",
+      "source": {
+        "source": "local",
+        "path": "./plugins/designer"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Engineering"
+    },
+    {
+      "name": "engineer",
+      "source": {
+        "source": "local",
+        "path": "./plugins/engineer"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Engineering"
+    }
+  ]
+}

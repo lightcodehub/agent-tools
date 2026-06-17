@@ -1,0 +1,35 @@
+{
+  "name": "designer",
+  "version": "1.1.6",
+  "description": "Design plugin with architecture design skills for reading code and producing implementation-ready design documents.",
+  "author": {
+    "name": "lightcodehub",
+    "url": "https://github.com/lightcodehub"
+  },
+  "homepage": "https://github.com/lightcodehub/agent-tools",
+  "repository": "https://github.com/lightcodehub/agent-tools",
+  "license": "MIT",
+  "keywords": [
+    "design",
+    "architecture",
+    "planning",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Designer",
+    "shortDescription": "Architecture and product design skills",
+    "longDescription": "Designer provides reusable design skills for reading an existing codebase and producing structured architecture, API, data model, component, and test design documents.",
+    "developerName": "lightcodehub",
+    "category": "Engineering",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/lightcodehub/agent-tools",
+    "defaultPrompt": [
+      "Design this feature after reading the code"
+    ],
+    "brandColor": "#2563EB"
+  }
+}

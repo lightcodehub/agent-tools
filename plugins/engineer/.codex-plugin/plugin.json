@@ -1,0 +1,36 @@
+{
+  "name": "engineer",
+  "version": "1.1.2",
+  "description": "Engineering execution plugin for turning design documents into runnable, tested code.",
+  "author": {
+    "name": "lightcodehub",
+    "url": "https://github.com/lightcodehub"
+  },
+  "homepage": "https://github.com/lightcodehub/agent-tools",
+  "repository": "https://github.com/lightcodehub/agent-tools",
+  "license": "MIT",
+  "keywords": [
+    "engineering",
+    "implementation",
+    "fullstack",
+    "testing",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Engineer",
+    "shortDescription": "Full-stack implementation skills",
+    "longDescription": "Engineer provides reusable implementation skills for turning design documents into compiled, runnable, tested code with focused validation reports.",
+    "developerName": "lightcodehub",
+    "category": "Engineering",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/lightcodehub/agent-tools",
+    "defaultPrompt": [
+      "Implement this design and run tests"
+    ],
+    "brandColor": "#16A34A"
+  }
+}

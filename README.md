@@ -1,6 +1,6 @@
 # agent-tools
 
-Claude Code plugin marketplace — `designer` 负责设计，`engineer` 负责实现，形成完整的"设计→实现"闭环。
+Codex / Claude Code plugin marketplace — `designer` 负责设计，`engineer` 负责实现，形成完整的"设计→实现"闭环。
 
 ## Layering
 
@@ -16,11 +16,34 @@ Claude Code plugin marketplace — `designer` 负责设计，`engineer` 负责�
 
 ## Add this marketplace
 
+### Codex
+
+```bash
+codex plugin marketplace add lightcodehub/agent-tools
+```
+
+For local development from this checkout:
+
+```bash
+codex plugin marketplace add /Users/xiaoming/Desktop/ss/agent-tools
+```
+
+### Claude Code
+
 ```text
 /plugin marketplace add lightcodehub/agent-tools
 ```
 
 ## Install plugin
+
+### Codex
+
+```bash
+codex plugin add designer@agent-tools
+codex plugin add engineer@agent-tools
+```
+
+### Claude Code
 
 ```text
 /plugin install designer@agent-tools
@@ -38,16 +61,23 @@ Claude Code plugin marketplace — `designer` 负责设计，`engineer` 负责�
 
 ```text
 agent-tools/
+├── .agents/
+│   └── plugins/
+│       └── marketplace.json
 ├── .claude-plugin/
 │   └── marketplace.json
 ├── plugins/
 │   ├── designer/
+│   │   ├── .codex-plugin/
+│   │   │   └── plugin.json
 │   │   ├── .claude-plugin/
 │   │   │   └── plugin.json
 │   │   ├── skills/
 │   │   │   └── architect/
 │   │   └── README.md
 │   └── engineer/
+│       ├── .codex-plugin/
+│       │   └── plugin.json
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       ├── skills/

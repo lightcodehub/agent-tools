@@ -4,6 +4,15 @@
 
 ## Install
 
+### Codex
+
+```bash
+codex plugin marketplace add lightcodehub/agent-tools
+codex plugin add designer@agent-tools
+```
+
+### Claude Code
+
 ```text
 /plugin marketplace add lightcodehub/agent-tools
 /plugin install designer@agent-tools
@@ -35,6 +44,8 @@ claude --plugin-dir ./plugins/designer
 
 ```text
 plugins/designer/
+├── .codex-plugin/
+│   └── plugin.json
 ├── .claude-plugin/
 │   └── plugin.json
 ├── README.md
