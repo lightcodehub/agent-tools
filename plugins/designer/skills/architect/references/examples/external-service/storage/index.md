@@ -11,10 +11,12 @@
 
 ## API 模块索引
 
-| 模块     | 职责               | 文档                         | 状态      |
-| -------- | ------------------ | ---------------------------- | --------- |
-| upload   | 文件上传、分片上传 | [upload.md](./upload.md)     | ⏳ 待实现 |
-| download | 文件下载、签名 URL | [download.md](./download.md) | ⏳ 待实现 |
+| 模块 | 职责 | 文档 |
+| --- | --- | --- |
+| upload | 文件上传、分片上传 | [upload.md](./upload.md) |
+| download | 文件下载、签名 URL | [download.md](./download.md) |
+
+> 本目录仅记录文件存储服务的 API 契约；本项目调用逻辑的测试与实施见 [csv 模块](../../csv/index.md#8-单元测试设计)。
 
 ## 公共约定
 

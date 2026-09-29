@@ -22,6 +22,7 @@ codex plugin add engineer@agent-tools
 
 ```text
 /engineer:fullstack 按这份设计文档实现用户昵称更新并写测试
+/engineer:discover-skills /path/to/project both
 ```
 
 ## Local development
@@ -37,6 +38,7 @@ claude --plugin-dir ./plugins/engineer
 ## Included skills
 
 - `fullstack` — 全栈实现：按设计文档落地可编译/可运行的代码，覆盖异常处理、关键路径日志、单元测试与测试报告
+- `discover-skills` — 用户主动执行的项目 skill 清理与注册：清理失效入口并创建 Codex/Claude Code 相对链接，重复执行跳过正确链接，冲突保留并报告
 - `ios` — 待扩展：iOS 实现
 - `android` — 待扩展：Android 实现
 - `backend` — 待扩展：后端实现
@@ -51,14 +53,24 @@ plugins/engineer/
 │   └── plugin.json
 ├── README.md
 └── skills/
-    └── fullstack/
+    ├── fullstack/
+    │   ├── SKILL.md
+    │   ├── README.md
+    │   ├── assets/test-report-template.md
+    │   └── references/
+    │       ├── checklist.md
+    │       └── skill-writing-guide.md
+    └── discover-skills/
         ├── SKILL.md
-        ├── README.md
-        ├── templates/
-        │   ├── pre-coding-questions.md
-        │   ├── implementation-checklist.md
-        │   ├── test-report-template.md
-        │   └── skill-writing-template.md
+        ├── agents/openai.yaml
+        ├── references/usage.md
+        └── scripts/
+            ├── scan_skills.py
+            ├── register_skills.py
+            ├── requirements.txt
+            └── tests/
+                ├── test_scan_skills.py
+                └── test_register_skills.py
 ```
 
 ## Uninstall

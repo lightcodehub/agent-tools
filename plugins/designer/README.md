@@ -53,16 +53,21 @@ plugins/designer/
     └── architect/
         ├── SKILL.md
         ├── README.md
-        ├── templates/
+        ├── assets/
+        │   ├── api-module.md
+        │   ├── api-service.md
         │   ├── design-index.md
-        │   ├── design-module.md
-        │   └── checklist.md
-        └── examples/
-            ├── index.md
-            ├── task/
-            │   └── index.md
-            └── csv/
-                └── index.md
+        │   └── design-module.md
+        └── references/
+            ├── checklist.md
+            └── examples/
+                ├── index.md
+                ├── task/index.md
+                ├── csv/index.md
+                └── external-service/storage/
+                    ├── index.md
+                    ├── upload.md
+                    └── download.md
 ```
 
 ## Uninstall
