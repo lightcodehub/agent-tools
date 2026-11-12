@@ -188,11 +188,17 @@ erDiagram
 ### 8.1 测试策略
 
 - **测试框架**: Vitest
-- **工作目录**: 消费项目根目录
-- **模块运行命令**: `npx --no-install vitest run server/modules/order`
-- **项目完整单元测试命令**: `npx --no-install vitest run --exclude '**/*.integration.test.ts'`
+- **工作目录**: 由入口显式接收项目根绝对路径；切换到该根目录后执行以下命令，根级 `vitest.config.ts` 的 root 也设为该路径
+- **源码准入**: TypeScript `.ts`；单元文件 `*.test.ts`、集成文件 `*.integration.test.ts`，用 `test`/`it` 注册行为名；support 仅 `.ts` 且有实际调用，不存 fixture 或配置
+- **模块运行命令**: `npx --no-install vitest run tests/task/unit`
+- **项目完整单元测试命令**: `npx --no-install vitest run --exclude 'tests/*/integration/**'`
 - **Mock 策略**: mock repository、job runner
 - **依赖模块 mock**: 无
+- **运行隔离**: 运行入口生成 UUID 作为 run-id 并先创建 `build/tests/runs/{run-id}/`；模块用例及参数实例独立使用 `data/task/{case-id}/`。根级配置将 JSON/JUnit、日志及启用时的覆盖率和缓存输出重定向到本轮 `artifacts/`。
+- **数据与辅助源码**: `tests/task/support/scenario.ts` 提供最小字段构造器，被 §8.3 的测试实际调用；测试所需文件及临时程序在用例 data 目录创建，不提交样本。无固定数据集、无外部位置例外，不创建对应空目录。
+- **清理**: 用例 teardown 清理各自数据与替身，运行入口的退出处理回收本轮资源；失败、取消、超时后检查并补清理。失败 artifacts 保留到问题定位结束后由本轮执行者删除，成功产物在报告生成后清理，不触碰其他运行。
+- **真实性**: 运行前断言依赖接口可调用、初始任务状态和替身行为符合用例；错误断言匹配设计错误，不把无关 EOF 或未处理异常算通过。本例无重要防护类回归，新增此类回归时补负向设计。
+- **Git**: 根 `.gitignore` 含 `/build/`，交付前检查忽略覆盖、Git 索引和拟提交文件；原有散落测试迁至 §8.3，调整导入及发现配置，清理失效引用。
 
 ### 8.2 测试用例
 
@@ -226,11 +232,12 @@ erDiagram
 
 | 测试文件                                               | 覆盖目标          |
 | ------------------------------------------------------ | ----------------- |
-| `server/modules/order/order-export.service.test.ts`    | 任务创建/查询逻辑 |
-| `server/modules/order/order-export.controller.test.ts` | 请求校验与响应    |
-| `server/modules/order/order-export.repository.test.ts` | 数据库调用与记录映射 |
+| `tests/task/unit/order-export.service.test.ts`    | 任务创建/查询逻辑 |
+| `tests/task/unit/order-export.controller.test.ts` | 请求校验与响应    |
+| `tests/task/unit/order-export.repository.test.ts` | 数据库调用与记录映射 |
+| `tests/task/support/scenario.ts` | 最小场景构造，由上述单元测试调用 |
 
-> 项目级单元测试报告固定写入 `tests/test-report.md`，不为本模块创建独立报告。
+> 项目唯一规范测试报告固定写入 `tests/test-report.md`，不为本模块创建独立报告。
 
 > 与 csv 的跨模块协作验证由调用方 [csv §8.4](../csv/index.md#84-项目内集成验证) 定义，本模块不重复定义同一集成用例。
 

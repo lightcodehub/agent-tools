@@ -60,6 +60,7 @@ plugins/designer/
         │   └── design-module.md
         └── references/
             ├── checklist.md
+            ├── test-management.md
             └── examples/
                 ├── index.md
                 ├── task/index.md

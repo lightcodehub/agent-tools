@@ -117,7 +117,7 @@ flowchart LR
 
 正常交付前运行项目完整单元测试集，按统一模板整体生成唯一报告 `tests/test-report.md`。失败或中断时也记录本轮结果、实际范围和未运行用例；跳过或零用例不能判为 PASS。报告按业务模块汇总，本地外部 API 调用代码通过 mock 测试并归属调用方模块，不单列外部服务测试模块。JUnit、JSON、coverage 等输出作为数据来源。
 
-本次实施范围与项目测试报告分别判断：只实施一个模块时，不要求补做范围外模块；范围外未实现项仍如实反映在项目报告中。模块状态仅在模块文档维护，不在总文档复制。
+单元与集成分别统计和判定状态，不合并为项目整体状态；完整盘点确认无设计及实际集成用例时才标为不适用。本次实施范围与报告中的各类别结果分别判断：只实施一个模块时，不要求补做范围外模块；范围外未实现项仍如实反映在项目报告中。模块状态仅在模块文档维护，不在总文档复制。
 
 ## 目录结构
 
@@ -126,9 +126,12 @@ skills/fullstack/
 ├── SKILL.md
 ├── README.md
 ├── assets/
-│   └── test-report-template.md
+│   ├── test-report.md
+│   ├── unit-test-report.md
+│   └── integration-test-report.md
 └── references/
     ├── checklist.md
+    ├── test-management.md
     └── skill-writing-guide.md
 ```
 
@@ -138,8 +141,10 @@ skills/fullstack/
   - 供支持 Agent Skills 的宿主读取的执行规约
 - `references/checklist.md`
   - 交付前自检清单
-- `assets/test-report-template.md`
-  - `tests/test-report.md` 的统一项目级报告模板
+- `assets/test-report.md`
+  - `tests/test-report.md` 的唯一报告骨架，展开单元分节与按需集成分节；两个分节模板不生成独立报告
+- `references/test-management.md`
+  - 固定源码白名单、数据与产物隔离、清理及 Git 提交检查
 - `references/skill-writing-guide.md`
   - 轻量库 skill 编写指南，包含能力发现、API 文档引用、随库迁移、宿主入口和验证规则
 
@@ -156,3 +161,9 @@ skills/fullstack/
 - 测试报告已产出
 - 本次可复用库/工具的随库 skill 与 API 文档已同步，需要用户执行的注册事项已说明
 - 未决问题与文档偏差已回报
+
+## 测试目录与运行产物
+
+遵守 [测试管理规范](references/test-management.md)：所有路径从消费项目根解析；源码按设计模块放在 `tests/{module}/unit/`、`integration/` 及实际调用的 `support/`，框架配置放根目录。临时数据在 `build/tests/runs/{run-id}/data/{module}/{case-id}/`，产物在同轮 `artifacts/`，只读数据集在 `build/tests/datasets/{dataset-id}/{version}/`。根 `/build/` 必须被忽略且无索引文件。
+
+唯一规范报告是 `tests/test-report.md`；不得提交数据、原始产物或其改名、编码、嵌入版本。设计明确格式白名单、生成方式、缺失策略、隔离清理与必要位置例外；实现负责执行前配置、真实验证、报告更新及逐文件提交核验。失败、中断和取消适用同一规则。

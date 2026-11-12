@@ -98,11 +98,17 @@ flowchart TD
 ### 8.1 测试策略
 
 - **测试框架**: Vitest
-- **工作目录**: 消费项目根目录
-- **模块运行命令**: `npx --no-install vitest run server/jobs/order-export.worker.test.ts server/jobs/order-export.csv.test.ts server/jobs/runner.test.ts`
-- **项目完整单元测试命令**: `npx --no-install vitest run --exclude '**/*.integration.test.ts'`
+- **工作目录**: 由入口显式接收项目根绝对路径；切换到该根目录后执行以下命令，根级 `vitest.config.ts` 的 root 也设为该路径
+- **源码准入**: TypeScript `.ts`；单元文件 `*.test.ts`、集成文件 `*.integration.test.ts`，用 `test`/`it` 注册行为名；support 仅 `.ts` 且有实际调用，不存 fixture 或配置
+- **模块运行命令**: `npx --no-install vitest run tests/csv/unit/order-export.worker.test.ts tests/csv/unit/order-export.csv.test.ts tests/csv/unit/runner.test.ts`
+- **项目完整单元测试命令**: `npx --no-install vitest run --exclude 'tests/*/integration/**'`
 - **Mock 策略**: mock repository、文件存储 client
 - **依赖模块 mock**: mock task 模块的 `ExportTask` 数据
+- **运行隔离**: 运行入口生成 UUID 作为 run-id 并先创建 `build/tests/runs/{run-id}/`；模块用例及参数实例独立使用 `data/csv/{case-id}/`。根级配置将 JSON/JUnit、日志及启用时的覆盖率和缓存输出重定向到本轮 `artifacts/`。
+- **数据与辅助源码**: `tests/csv/support/scenario.ts` 提供最小字段构造器，被 §8.3 的测试实际调用；测试所需文件及临时程序在用例 data 目录创建，不提交样本。无固定数据集、无外部位置例外，不创建对应空目录。
+- **清理**: 用例 teardown 清理各自数据与替身，运行入口的退出处理回收本轮资源；失败、取消、超时后检查并补清理。失败 artifacts 保留到问题定位结束后由本轮执行者删除，成功产物在报告生成后清理，不触碰其他运行。
+- **真实性**: 运行前断言依赖接口可调用、初始任务状态和替身行为符合用例；错误断言匹配设计错误，不把无关 EOF 或未处理异常算通过。本例无重要防护类回归，新增此类回归时补负向设计。
+- **Git**: 根 `.gitignore` 含 `/build/`，交付前检查忽略覆盖、Git 索引和拟提交文件；原有散落测试迁至 §8.3，调整导入及发现配置，清理失效引用。
 
 ### 8.2 测试用例
 
@@ -134,23 +140,24 @@ flowchart TD
 
 | 测试文件                                  | 覆盖目标                     |
 | ----------------------------------------- | ---------------------------- |
-| `server/jobs/order-export.worker.test.ts` | `processExportTask` 状态流转 |
-| `server/jobs/order-export.csv.test.ts`    | `generateCSV` 生成逻辑       |
-| `server/jobs/runner.test.ts` | 导出任务处理函数注册 |
+| `tests/csv/unit/order-export.worker.test.ts` | `processExportTask` 状态流转 |
+| `tests/csv/unit/order-export.csv.test.ts`    | `generateCSV` 生成逻辑       |
+| `tests/csv/unit/runner.test.ts` | 导出任务处理函数注册 |
+| `tests/csv/support/scenario.ts` | 最小场景构造，由上述单元测试及 §8.4 集成测试调用 |
 
-> 项目级单元测试报告固定写入 `tests/test-report.md`，不为本模块创建独立报告。
+> 项目唯一规范测试报告固定写入 `tests/test-report.md`，不为本模块创建独立报告。
 
 ### 8.4 项目内集成验证
 
 - **归属与参与模块**: 用例归 csv 管理，验证 task 创建/查询服务与 csv worker、CSV 生成逻辑之间的协作。
 - **真实调用范围**: `createExportTask`、task repository、`processExportTask`、`generateCSV`、`getExportTask` 使用实际实现，不 mock 这些项目内接口。
-- **Mock 边界**: 数据库客户端使用同一个有状态测试替身，保存并返回本轮任务记录及预置订单；job runner 捕获任务而不启动后台进程；文件存储 client 返回受控结果。测试不连接远端 API 或生产数据库。
+- **Mock 边界**: 数据库客户端使用同一个有状态测试替身，为每个用例单独构造、保存并返回最小任务记录及订单；job runner 捕获任务而不启动后台进程；文件存储 client 返回受控结果。测试不连接远端 API 或生产数据库。
 - **运行条件**: task 服务与 repository、csv worker 和生成器已实现；使用总文档约定的 Node.js、Vitest 环境，在消费项目根目录运行。
-- **测试文件与命令**: `server/jobs/order-export.integration.test.ts`；`npx --no-install vitest run server/jobs/order-export.integration.test.ts`。
+- **测试文件与命令**: `tests/csv/integration/order-export.integration.test.ts`；`npx --no-install vitest run tests/csv/integration/order-export.integration.test.ts`。
 
 | 用例编号 | 场景与输入 | 预期结果 | 状态 |
 | --- | --- | --- | --- |
-| `csv-IT-001` | 使用 `{status: 'paid'}` 创建任务，向真实 worker 传入返回的 taskId，存储替身返回 fileUrl | 生成内容匹配预置订单的 CSV；通过真实查询服务取得 success 状态及相同 fileUrl | ⏳ 待实现 |
+| `csv-IT-001` | 使用 `{status: 'paid'}` 创建任务，向真实 worker 传入返回的 taskId，存储替身返回 fileUrl | 生成内容匹配构造订单的 CSV；通过真实查询服务取得 success 状态及相同 fileUrl | ⏳ 待实现 |
 | `csv-IT-002` | 同样创建任务，但存储替身抛出上传错误 | worker 将任务写为 failed；真实查询服务返回 errorMessage，不返回成功 fileUrl | ⏳ 待实现 |
 
 > 两条结果在 `tests/test-report.md` 的集成验证附节记录，不计入单元用例数量。需要本次 csv 实施完成时，两条集成验收均须通过。

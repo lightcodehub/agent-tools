@@ -26,7 +26,9 @@
 **运行环境与兼容约束**:
 
 - 本示例假定消费项目使用 Node.js 22.x、TypeScript、Vitest，依赖版本由该项目锁文件确定；这些是示例项目条件，不是本 marketplace 的运行环境。
-- 所有测试命令在消费项目根目录执行，使用已安装的 Vitest；不新增另一套测试框架。
+- 测试入口显式接收并解析消费项目根目录的绝对路径，命令先切换到该路径，使用已安装的 Vitest；不依赖启动时的当前目录。
+- 根级 `vitest.config.ts` 的 root 指向该项目根，include 仅匹配 `tests/*/unit/**/*.test.ts`、`tests/*/integration/**/*.integration.test.ts`；support 不直接作为测试执行。数据与产物路径显式基于根路径及 run-id，详见各模块 §8。
+- 测试源码只在模块 unit/integration/support；无共享辅助调用需求，不创建 `tests/support/`。唯一报告为 `tests/test-report.md`，根 `.gitignore` 包含 `/build/`。
 - 保持现有订单查询接口兼容；导出参数使用 task 模块 §4 定义的 `OrderFilters`。
 
 ## 3. 代码规范

@@ -114,7 +114,7 @@ architect 负责澄清并写明业务规则、接口契约、异常和边界处�
 
 然后基于这个框架来设计测试用例和测试文件布局。
 
-每个模块必须在设计阶段写出完整、可直接实施的具体测试用例，不能只写“覆盖关键路径”等测试目标，也不能留给 `/engineer:fullstack` 临时补充。每条测试用例使用 `{module-name}-UT-{NNN}` 格式的稳定编号。测试代码沿用项目现有组织方式，项目级单元测试报告统一由 `/engineer:fullstack` 写入 `tests/test-report.md`，architect 不生成模块级报告。
+每个模块必须在设计阶段写出完整、可直接实施的具体测试用例，不能只写“覆盖关键路径”等测试目标，也不能留给 `/engineer:fullstack` 临时补充。每条测试用例使用 `{module-name}-UT-{NNN}` 格式的稳定编号。测试代码固定在 `tests/{module}/unit/`、`tests/{module}/integration/`，辅助源码只在模块或跨模块 `support/`，并要求真实调用，项目唯一规范测试报告统一由 `/engineer:fullstack` 写入 `tests/test-report.md`，architect 不生成模块级报告。
 
 ### 设计尽量模块化
 
@@ -159,6 +159,7 @@ skills/architect/
 │   └── design-module.md
 └── references/
     ├── checklist.md
+    ├── test-management.md
     └── examples/
         ├── index.md
         ├── task/index.md
@@ -179,6 +180,8 @@ skills/architect/
   - 模块设计文档模板（每个业务模块独立使用）
 - `assets/api-service.md` / `assets/api-module.md`
   - 外部服务总览和 API 模块文档模板
+- `references/test-management.md`
+  - 源码准入、数据与产物路径、清理、唯一报告和 Git 检查规范
 - `references/checklist.md`
   - 设计文档写入后、交付前的自检清单
 - `references/examples/` — 订单导出设计示例
@@ -231,3 +234,9 @@ skills/architect/
 ## 建议用法
 
 对复杂需求，先用 `/designer:architect`，等设计文档稳定后，再进入实现阶段。这样可以显著减少边做边改、返工和接口跑偏。
+
+## 测试目录与运行产物
+
+遵守 [测试管理规范](references/test-management.md)：所有路径从消费项目根解析；源码按设计模块放在 `tests/{module}/unit/`、`integration/` 及实际调用的 `support/`，框架配置放根目录。临时数据在 `build/tests/runs/{run-id}/data/{module}/{case-id}/`，产物在同轮 `artifacts/`，只读数据集在 `build/tests/datasets/{dataset-id}/{version}/`。根 `/build/` 必须被忽略且无索引文件。
+
+唯一规范报告是 `tests/test-report.md`；不得提交数据、原始产物或其改名、编码、嵌入版本。设计明确格式白名单、生成方式、缺失策略、隔离清理与必要位置例外；实现负责执行前配置、真实验证、报告更新及逐文件提交核验。失败、中断和取消适用同一规则。

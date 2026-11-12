@@ -56,9 +56,13 @@ plugins/engineer/
     ├── fullstack/
     │   ├── SKILL.md
     │   ├── README.md
-    │   ├── assets/test-report-template.md
+    │   ├── assets/
+    │   │   ├── test-report.md
+    │   │   ├── unit-test-report.md
+    │   │   └── integration-test-report.md
     │   └── references/
     │       ├── checklist.md
+    │       ├── test-management.md
     │       └── skill-writing-guide.md
     └── discover-skills/
         ├── SKILL.md

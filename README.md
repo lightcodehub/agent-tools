@@ -105,3 +105,7 @@ agent-tools/
 - `engineer` — 包含 `fullstack`（全栈实现）和 `discover-skills`（用户主动执行的项目 skill 发现与注册），后续扩展 `ios`、`android`、`backend` 等
 
 插件详情见 [plugins/designer/README.md](plugins/designer/README.md) 和 [plugins/engineer/README.md](plugins/engineer/README.md)。
+
+## 测试管理约定
+
+设计与实现 skill 统一要求消费项目将测试源码按模块放在 `tests/`，测试数据与运行产物放在被忽略的 `build/tests/`，仅保留 `tests/test-report.md` 一份规范报告。具体准入、数据隔离、清理及 Git 检查见 [architect 规范](plugins/designer/skills/architect/references/test-management.md) 与 [fullstack 规范](plugins/engineer/skills/fullstack/references/test-management.md)。两份内容保持一致，随各自插件独立分发。
