@@ -1,6 +1,6 @@
 # engineer
 
-工程实现类 skill 插件，目前包含全栈实现，后续扩展 iOS、Android、后端等。分层计划见顶层 [README](../../README.md#layering)。
+工程实现插件：编写业务代码与测试、逐单元自测、修复问题并交验。三角色分工见根 [README](../../README.md#layering)。
 
 ## Install
 
@@ -21,8 +21,7 @@ codex plugin add engineer@agent-tools
 ## Use
 
 ```text
-/engineer:fullstack 按这份设计文档实现用户昵称更新并写测试
-/engineer:discover-skills /path/to/project both
+/engineer:developer 按这份设计实现用户昵称更新并写测试
 ```
 
 ## Local development
@@ -31,39 +30,32 @@ codex plugin add engineer@agent-tools
 claude --plugin-dir ./plugins/engineer
 ```
 
-```text
-/engineer:fullstack 按这份设计文档实现用户昵称更新
-```
-
 ## Included skills
 
-- `fullstack` — 全栈实现：按设计文档落地可编译/可运行的代码，覆盖异常处理、关键路径日志、单元测试与测试报告
-- `discover-skills` — 用户主动执行的项目 skill 清理与注册：清理失效入口并创建 Codex/Claude Code 相对链接，重复执行跳过正确链接，冲突保留并报告
-- `ios` — 待扩展：iOS 实现
-- `android` — 待扩展：Android 实现
-- `backend` — 待扩展：后端实现
+- [developer](skills/developer/SKILL.md) — 工程实现插件：编写业务代码与测试、逐单元自测、修复问题并交验。
+- [discover-skills](skills/discover-skills/SKILL.md) — 用户主动执行的 skill 发现、清理与注册；使用 `/engineer:discover-skills /path/to/project both`。
+
+## 职责边界
+
+developer 保留自测责任，自测证据放本轮 artifacts；不生成规范报告或自行判定技术验收。正常端到端交付衔接 inspector:validator，后者独立审查、验证并维护唯一报告。缺少 validator 时如实交付实施与自测成果，不能声称已独立验收。
+
+当前开发入口为 `/engineer:developer`。插件安装与项目 skill 注册由用户管理，仓库维护不自动修改已安装缓存或用户注册链接。
 
 ## Structure
 
 ```text
 plugins/engineer/
-├── .codex-plugin/
-│   └── plugin.json
-├── .claude-plugin/
-│   └── plugin.json
+├── .codex-plugin/plugin.json
+├── .claude-plugin/plugin.json
 ├── README.md
 └── skills/
-    ├── fullstack/
+    ├── developer/
     │   ├── SKILL.md
     │   ├── README.md
-    │   ├── assets/
-    │   │   ├── test-report.md
-    │   │   ├── unit-test-report.md
-    │   │   └── integration-test-report.md
     │   └── references/
     │       ├── checklist.md
-    │       ├── test-management.md
-    │       └── skill-writing-guide.md
+    │       ├── skill-writing-guide.md
+    │       └── test-management.md
     └── discover-skills/
         ├── SKILL.md
         ├── agents/openai.yaml
@@ -85,4 +77,4 @@ plugins/engineer/
 
 ## More details
 
-详见 [skills/fullstack/README.md](skills/fullstack/README.md)。
+详见 [skills/developer/README.md](skills/developer/README.md)。

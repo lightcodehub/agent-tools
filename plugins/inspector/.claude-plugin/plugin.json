@@ -1,0 +1,10 @@
+{
+  "name": "inspector",
+  "description": "Inspection plugin for code and test review, independent validation, evidence checks, and technical acceptance.",
+  "version": "1.0.0",
+  "author": {
+    "name": "lightcodehub"
+  },
+  "homepage": "https://github.com/lightcodehub/agent-tools",
+  "license": "MIT"
+}

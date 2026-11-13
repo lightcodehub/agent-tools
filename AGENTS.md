@@ -3,7 +3,8 @@
 本仓库发布 Codex / Claude Code 插件。项目介绍、安装方式和目录见 [README.md](README.md)；具体流程按需读取对应 skill，不在此重复维护：
 
 - [architect](plugins/designer/skills/architect/SKILL.md)：设计与存量补档。
-- [fullstack](plugins/engineer/skills/fullstack/SKILL.md)：按设计实施并验证。
+- [developer](plugins/engineer/skills/developer/SKILL.md)：按设计实施、编写测试、自测并修复。
+- [validator](plugins/inspector/skills/validator/SKILL.md)：独立审查、验证、规范报告与技术验收。
 - [discover-skills](plugins/engineer/skills/discover-skills/SKILL.md)：用户主动执行的 skill 发现、清理与注册。
 
 ## 修改约定

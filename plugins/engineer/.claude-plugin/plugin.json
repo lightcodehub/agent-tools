@@ -1,7 +1,7 @@
 {
   "name": "engineer",
-  "description": "Engineering execution plugin — turn design docs into runnable, tested code. Starts with fullstack.",
-  "version": "1.3.0",
+  "description": "Engineering implementation plugin for writing code, tests, and self-test evidence before independent validation.",
+  "version": "1.4.0",
   "author": {
     "name": "lightcodehub"
   },

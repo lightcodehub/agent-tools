@@ -12,6 +12,10 @@
     {
       "name": "engineer",
       "source": "./plugins/engineer"
+    },
+    {
+      "name": "inspector",
+      "source": "./plugins/inspector"
     }
   ]
 }

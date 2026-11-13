@@ -1,18 +1,16 @@
 # agent-tools
 
-Codex / Claude Code plugin marketplace — `designer` 负责设计，`engineer` 负责实现，形成完整的"设计→实现"闭环。
+Codex / Claude Code plugin marketplace — designer 负责设计，engineer 负责实现与自测，inspector 负责独立验证与技术验收。
 
 ## Layering
 
-| designer                     | engineer                         |
-| ---------------------------- | -------------------------------- |
-| `architect` 架构设计         | `fullstack` 全栈实现             |
-| `ui` UI 设计（待扩展）       | `ios` iOS 实现（待扩展）         |
-| `product` 产品设计（待扩展） | `android` Android 实现（待扩展） |
-| ...                          | `backend` 后端实现（待扩展）     |
-|                              | ...                              |
+| designer（设计者） | engineer（工程师） | inspector（检验员） |
+| --- | --- | --- |
+| `architect` 架构师：定义预期、用例与验收标准 | `developer` 开发者：实现、编写测试、自测与修复 | `validator` 验证人员：审查、执行验证、核验证据与技术验收 |
 
-`designer` 统一收敛所有设计角色，`engineer` 统一收敛所有实现角色。两者抽象层级对等，设计文档是 designer 产出、engineer 消费的中间契约。
+三个插件按角色分工。设计文档是共同依据；developer 提供自测证据，validator 重新核验并独占维护 `tests/test-report.md`。用户负责产品验收与发布决定。
+
+正常实现请求在同一任务中衔接设计、开发和验证，设计已有且有效时直接复用。独立验证请求也可直接进入 validator，不要求先执行 developer；仅验证不自动授权修改实现。`engineer` 另提供用户主动执行的 `discover-skills`。
 
 ## Add this marketplace
 
@@ -41,6 +39,7 @@ codex plugin marketplace add /Users/xiaoming/Desktop/ss/agent-tools
 ```bash
 codex plugin add designer@agent-tools
 codex plugin add engineer@agent-tools
+codex plugin add inspector@agent-tools
 ```
 
 ### Claude Code
@@ -48,13 +47,15 @@ codex plugin add engineer@agent-tools
 ```text
 /plugin install designer@agent-tools
 /plugin install engineer@agent-tools
+/plugin install inspector@agent-tools
 ```
 
 ## Use skill
 
 ```text
 /designer:architect 为订单页新增批量导出能力，先看代码再给设计文档
-/engineer:fullstack 按这份设计文档实现昵称更新并写测试
+/engineer:developer 按这份设计文档实现昵称更新并写测试
+/inspector:validator 验证本次实现是否满足设计与技术验收要求
 /engineer:discover-skills /path/to/project both
 ```
 
@@ -69,43 +70,45 @@ Skill 合规以 [Agent Skills 标准协议](https://agentskills.io/specification
 
 ```text
 agent-tools/
-├── .agents/
-│   └── plugins/
-│       └── marketplace.json
-├── .claude-plugin/
-│   └── marketplace.json
+├── .agents/plugins/marketplace.json
+├── .claude-plugin/marketplace.json
 ├── plugins/
 │   ├── designer/
-│   │   ├── .codex-plugin/
-│   │   │   └── plugin.json
-│   │   ├── .claude-plugin/
-│   │   │   └── plugin.json
-│   │   ├── skills/
-│   │   │   └── architect/
+│   │   ├── .codex-plugin/plugin.json
+│   │   ├── .claude-plugin/plugin.json
+│   │   ├── skills/architect/
 │   │   └── README.md
-│   └── engineer/
-│       ├── .codex-plugin/
-│       │   └── plugin.json
-│       ├── .claude-plugin/
-│       │   └── plugin.json
-│       ├── skills/
-│       │   ├── fullstack/
-│       │   └── discover-skills/
+│   ├── engineer/
+│   │   ├── .codex-plugin/plugin.json
+│   │   ├── .claude-plugin/plugin.json
+│   │   ├── skills/
+│   │   │   ├── developer/
+│   │   │   └── discover-skills/
+│   │   └── README.md
+│   └── inspector/
+│       ├── .codex-plugin/plugin.json
+│       ├── .claude-plugin/plugin.json
+│       ├── skills/validator/
 │       └── README.md
 ├── README.md
-├── AGENTS.md                 # 共用的仓库维护约定，Codex 原生读取
-├── CLAUDE.md                 # Claude Code 入口，引用 AGENTS.md
+├── AGENTS.md
+├── CLAUDE.md
 ├── LICENSE
 └── .gitignore
 ```
 
 ## Included plugins
 
-- `designer` — 目前包含 `architect`（架构设计），后续扩展 `ui`、`product` 等
-- `engineer` — 包含 `fullstack`（全栈实现）和 `discover-skills`（用户主动执行的项目 skill 发现与注册），后续扩展 `ios`、`android`、`backend` 等
+- [designer](plugins/designer/README.md) — `architect`：架构设计与存量补档。
+- [engineer](plugins/engineer/README.md) — `developer`：实现、自测与修复；`discover-skills`：用户主动执行的发现与注册。
+- [inspector](plugins/inspector/README.md) — `validator`：代码与测试审查、独立验证、唯一报告与技术验收。
 
-插件详情见 [plugins/designer/README.md](plugins/designer/README.md) 和 [plugins/engineer/README.md](plugins/engineer/README.md)。
+## 插件协作
+
+完整实现与技术验收流程使用 engineer 和 inspector；需要设计或补充设计时使用 designer。inspector 可独立验证已有项目，并将设计问题和实现问题分别交给 architect 与 developer。报告模板随 inspector 分发。仓库维护不自动修改已安装插件缓存或用户注册入口。
 
 ## 测试管理约定
 
-设计与实现 skill 统一要求消费项目将测试源码按模块放在 `tests/`，测试数据与运行产物放在被忽略的 `build/tests/`，仅保留 `tests/test-report.md` 一份规范报告。具体准入、数据隔离、清理及 Git 检查见 [architect 规范](plugins/designer/skills/architect/references/test-management.md) 与 [fullstack 规范](plugins/engineer/skills/fullstack/references/test-management.md)。两份内容保持一致，随各自插件独立分发。
+三个角色统一要求消费项目将测试源码按模块放在 `tests/`，测试数据与运行产物放在被忽略的 `build/tests/`。developer 仅提供本轮自测证据，validator 独占维护 `tests/test-report.md`，在其中分列 UT/IT 结果、审查发现及本次技术验收结论。
+
+具体准入、隔离、清理与 Git 核验见 [architect 规范](plugins/designer/skills/architect/references/test-management.md)、[developer 规范](plugins/engineer/skills/developer/references/test-management.md) 和 [validator 规范](plugins/inspector/skills/validator/references/test-management.md)。三份同文规则随插件独立分发；修改时同步核对。

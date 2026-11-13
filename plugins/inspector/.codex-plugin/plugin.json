@@ -1,0 +1,37 @@
+{
+  "name": "inspector",
+  "version": "1.0.0",
+  "description": "Inspection plugin for code and test review, independent validation, evidence checks, and technical acceptance.",
+  "author": {
+    "name": "lightcodehub",
+    "url": "https://github.com/lightcodehub"
+  },
+  "homepage": "https://github.com/lightcodehub/agent-tools",
+  "repository": "https://github.com/lightcodehub/agent-tools",
+  "license": "MIT",
+  "keywords": [
+    "inspection",
+    "review",
+    "validation",
+    "testing",
+    "acceptance",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Inspector",
+    "shortDescription": "Independent validation and technical acceptance",
+    "longDescription": "Inspector reviews implementation and tests, executes validation, checks evidence and file admission, and maintains the canonical test report and technical acceptance result.",
+    "developerName": "lightcodehub",
+    "category": "Engineering",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/lightcodehub/agent-tools",
+    "defaultPrompt": [
+      "Validate this implementation against its design and acceptance criteria"
+    ],
+    "brandColor": "#D97706"
+  }
+}

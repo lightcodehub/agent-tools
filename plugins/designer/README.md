@@ -1,6 +1,6 @@
 # designer
 
-设计类 skill 插件，目前包含架构设计，后续扩展 UI 设计、产品设计等。分层计划见顶层 [README](../../README.md#layering)。
+设计类 skill 插件，提供架构设计与存量设计补档。分层计划见顶层 [README](../../README.md#layering)。
 
 ## Install
 
@@ -37,8 +37,10 @@ claude --plugin-dir ./plugins/designer
 ## Included skills
 
 - `architect` — 架构设计：先读代码，再输出结构化设计文档（API、流程图、DB 设计、组件设计、测试设计）
-- `ui` — 待扩展：UI/视觉设计
-- `product` — 待扩展：产品设计
+
+## 职责交接
+
+architect 定义设计、具体用例与验收标准；[engineer:developer](../engineer/skills/developer/SKILL.md) 实现并自测；[inspector:validator](../inspector/skills/validator/SKILL.md) 独立审查、验证并维护唯一报告和技术验收结论。设计交付不等于实现完成，自测通过不等于技术验收通过。
 
 ## Structure
 

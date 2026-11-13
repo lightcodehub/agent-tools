@@ -1,7 +1,7 @@
 {
   "name": "engineer",
-  "version": "1.3.0",
-  "description": "Engineering execution plugin for turning design documents into runnable, tested code.",
+  "version": "1.4.0",
+  "description": "Engineering implementation plugin for writing code, tests, and self-test evidence before independent validation.",
   "author": {
     "name": "lightcodehub",
     "url": "https://github.com/lightcodehub"
@@ -12,15 +12,15 @@
   "keywords": [
     "engineering",
     "implementation",
-    "fullstack",
+    "developer",
     "testing",
     "skills"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Engineer",
-    "shortDescription": "Full-stack implementation skills",
-    "longDescription": "Engineer provides reusable implementation skills for turning design documents into compiled, runnable, tested code with focused validation reports.",
+    "shortDescription": "Implementation and self-testing skills",
+    "longDescription": "Engineer implements designs, writes tests, runs self-tests, and fixes defects before handing off to Inspector for technical acceptance.",
     "developerName": "lightcodehub",
     "category": "Engineering",
     "capabilities": [
