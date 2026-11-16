@@ -8,7 +8,7 @@ Codex / Claude Code plugin marketplace — designer 负责设计，engineer 负�
 | --- | --- | --- |
 | `architect` 架构师：定义预期、用例与验收标准 | `developer` 开发者：实现、编写测试、自测与修复 | `validator` 验证人员：审查、执行验证、核验证据与技术验收 |
 
-三个插件按角色分工。设计文档是共同依据；developer 提供自测证据，validator 重新核验并独占维护 `tests/test-report.md`。用户负责产品验收与发布决定。
+三个插件在消费项目中按角色分工。设计文档是共同依据；developer 提供自测证据，validator 重新核验并独占维护 `tests/test-report.md`。用户负责产品验收与发布决定。
 
 正常实现请求在同一任务中衔接设计、开发和验证，设计已有且有效时直接复用。独立验证请求也可直接进入 validator，不要求先执行 developer；仅验证不自动授权修改实现。`engineer` 另提供用户主动执行的 `discover-skills`。
 
@@ -112,3 +112,9 @@ agent-tools/
 三个角色统一要求消费项目将测试源码按模块放在 `tests/`，测试数据与运行产物放在被忽略的 `build/tests/`。developer 仅提供本轮自测证据，validator 独占维护 `tests/test-report.md`，在其中分列 UT/IT 结果、审查发现及本次技术验收结论。
 
 具体准入、隔离、清理与 Git 核验见 [architect 规范](plugins/designer/skills/architect/references/test-management.md)、[developer 规范](plugins/engineer/skills/developer/references/test-management.md) 和 [validator 规范](plugins/inspector/skills/validator/references/test-management.md)。三份同文规则随插件独立分发；修改时同步核对。
+
+本仓库自身维护仅出具临时验证结果，存放于被忽略的 `build/validation/` 或受控系统临时目录，不创建根目录测试布局或规范测试报告。维护检查见 [AGENTS.md](AGENTS.md#验证)。
+
+## 文档格式
+
+Markdown 使用根 [.prettierrc.json](.prettierrc.json)：表格不填充列宽，普通段落不按列宽硬换行，代码块内部不重新格式化。`.prettierignore` 排除 `build/`，原始验证归档和日志不参与批量格式化。

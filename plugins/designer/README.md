@@ -62,6 +62,7 @@ plugins/designer/
         │   └── design-module.md
         └── references/
             ├── checklist.md
+            ├── document-style.md
             ├── test-management.md
             └── examples/
                 ├── index.md

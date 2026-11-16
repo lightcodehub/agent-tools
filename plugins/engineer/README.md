@@ -54,6 +54,7 @@ plugins/engineer/
     │   ├── README.md
     │   └── references/
     │       ├── checklist.md
+    │       ├── document-style.md
     │       ├── skill-writing-guide.md
     │       └── test-management.md
     └── discover-skills/

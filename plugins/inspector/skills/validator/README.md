@@ -46,8 +46,19 @@ skills/validator/
 │   └── integration-test-report.md
 └── references/
     ├── checklist.md
+    ├── document-style.md
     ├── reporting.md
     └── test-management.md
 ```
 
 执行时读取 [测试管理规范](references/test-management.md)、[报告规则](references/reporting.md) 和 [报告骨架](assets/test-report.md)，交付前使用 [自检清单](references/checklist.md)。所有运行资源遵守 build/tests 布局、隔离与清理规则。
+
+## 产出文档要求
+
+交付的项目文档遵守 [产出文档表达规范](references/document-style.md)：直接说明有效规则、条件和依据，语言自然、精简、准确；不带对话痕迹或工作过程叙述。Markdown 表格采用紧凑格式，不填充列宽；测试报告保留必要的结果、失败原因和重试证据。
+
+## 设计文档读取与适用性
+
+总设计文档 §3.1 定义代码规范，§3.2 定义公共测试约定；模块 §8 以相对链接引用，并提供具体路径、命令、用例、数据准备与必要例外。既有有效设计使用其对应章节。实际接口、依赖、业务规则与测试验收信息必须完整；无适用内容的 HTTP、依赖、数据结构、数据库和 UI 子节按规则省略。
+
+模板仅提供成品字段和可删除的填写提示。实际语言、数据库及视觉参数来自项目依据，运行时失败处理与测试替身分别定义；文档不复制角色操作规约或预填检查结论。

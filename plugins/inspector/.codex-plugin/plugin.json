@@ -1,6 +1,6 @@
 {
   "name": "inspector",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Inspection plugin for code and test review, independent validation, evidence checks, and technical acceptance.",
   "author": {
     "name": "lightcodehub",

@@ -25,21 +25,36 @@
 
 **运行环境与兼容约束**:
 
-- 本示例假定消费项目使用 Node.js 22.x、TypeScript、Vitest，依赖版本由该项目锁文件确定；这些是示例项目条件，不是本 marketplace 的运行环境。
-- 测试入口显式接收并解析消费项目根目录的绝对路径，命令先切换到该路径，使用已安装的 Vitest；不依赖启动时的当前目录。
-- 根级 `vitest.config.ts` 的 root 指向该项目根，include 仅匹配 `tests/*/unit/**/*.test.ts`、`tests/*/integration/**/*.integration.test.ts`；support 不直接作为测试执行。数据与产物路径显式基于根路径及 run-id，详见各模块 §8。
-- 测试源码只在模块 unit/integration/support；无共享辅助调用需求，不创建 `tests/support/`。唯一报告为 `tests/test-report.md`，根 `.gitignore` 包含 `/build/`。
-- 保持现有订单查询接口兼容；导出参数使用 task 模块 §4 定义的 `OrderFilters`。
+- Node.js 22.x、TypeScript；依赖版本由锁文件确定。
+- 保持现有订单查询接口兼容；导出参数使用 task 模块定义的 `OrderFilters`。
 
-## 3. 代码规范
+## 3. 项目约定
 
-各模块实施时遵循:
+### 3.1 代码规范
 
-- 命名规范: 文件名 kebab-case（`order-export.service.ts`），类名 PascalCase，函数/变量 camelCase
-- 代码风格: ESLint + Prettier 配置，2 空格缩进，单引号，无分号
-- 错误处理: controller 层 try-catch + 统一错误中间件，service 层抛出自定义业务异常
-- 日志规范: 使用 `logger.info/error` 记录关键路径（任务创建、状态变更、异常），含 userId 和 taskId
-- 注释规范: 公开函数使用 JSDoc，复杂业务逻辑加行内注释
+- **命名与风格**: 文件名 kebab-case，类名 PascalCase，函数和变量 camelCase；ESLint + Prettier，2 空格缩进、单引号、无分号。
+- **错误处理**: controller 使用统一错误中间件，service 抛出业务异常。
+- **日志**: `logger.info/error` 记录任务创建、状态变更和异常，包含 userId、taskId。
+- **注释**: 公开函数使用 JSDoc，复杂逻辑补充必要注释。
+
+### 3.2 测试约定
+
+| 项目 | 约定 |
+| --- | --- |
+| 框架与配置 | 已安装的 Vitest，版本由锁文件确定；根级 `vitest.config.ts` 发现 `tests/*/unit/**/*.test.ts` 与 `tests/*/integration/**/*.integration.test.ts`，support 不作为独立用例执行 |
+| 根目录与入口 | 根级 `test-runner.mjs` 以自身目录定位项目根，工作目录与 Vitest root 均使用该绝对路径 |
+| 源码格式与命名 | TypeScript `.ts`；UT 为 `*.test.ts`，IT 为 `*.integration.test.ts`，通过 `test`/`it` 注册行为名；辅助源码为被测试实际调用的 `.ts` |
+| 全量单元命令 | `node test-runner.mjs --kind unit --module all` |
+| 全量集成命令 | `node test-runner.mjs --kind integration --module all` |
+| 运行标识 | `test-runner.mjs` 每次调用生成唯一 UUID；module 取模块索引名称，case-id 由用例编号及参数实例标识构成，并行实例独立分配 |
+| 临时数据 | `build/tests/runs/{run-id}/data/{module}/{case-id}/`；文件资源与临时辅助程序均在对应用例目录 |
+| 原始产物 | 根级配置将 JSON/JUnit、日志及启用的覆盖率/缓存输出到 `build/tests/runs/{run-id}/artifacts/` |
+| 清理与保留 | 用例 teardown 和运行入口退出处理回收本轮资源，失败、取消和超时后核对残留；交验所需原始证据保留至本次验收结束，故障诊断产物保留至问题定位结束，随后清理对应运行目录 |
+| 数据依赖 | 仅构造最小合成场景，不依赖固定数据集；没有系统临时目录位置例外 |
+| 版本控制 | 根 `.gitignore` 包含 `/build/`，build 无受跟踪文件 |
+| 规范报告 | `tests/test-report.md` |
+
+**测试入口契约**: `test-runner.mjs --kind <unit|integration> --module <all|task|csv>`。入口创建唯一运行目录，将 `TEST_PROJECT_ROOT`、`TEST_RUN_ID`、`TEST_KIND`、`TEST_MODULE` 传给以项目根为工作目录启动的 `npx --no-install vitest run`，并透传退出码。根配置与测试辅助源码读取同一组环境变量，不各自生成 run-id；根配置按类别和模块选择上述固定发现路径并设置产物输出。调用入口无需依赖启动目录，直接调用 Vitest 不构成本文约定的验证命令。
 
 ## 5. 模块索引与依赖关系
 
@@ -49,8 +64,6 @@
 | --- | --- | --- | --- |
 | task | 任务创建与查询接口、任务表设计与迁移 | [task](./task/index.md) | — |
 | csv | 异步生成 CSV、更新任务状态 | [csv](./csv/index.md) | task |
-
-> 本示例不涉及 UI，省略 §4 并保留后续编号；状态查看各模块文档。
 
 ### 5.2 模块依赖图
 
@@ -70,18 +83,18 @@ graph TD
 
 ## 6. 风险与回滚
 
-| 风险         | 概率 | 影响           | 缓解措施                 |
-| ------------ | ---- | -------------- | ------------------------ |
-| 导出任务积压 | 中   | 用户长时间等待 | 复用 job runner 并加监控 |
-| 文件地址过期 | 低   | 下载失败       | 后端返回可刷新链接       |
+| 风险 | 概率 | 影响 | 缓解措施 |
+| --- | --- | --- | --- |
+| 导出任务积压 | 中 | 用户长时间等待 | 复用 job runner 并加监控 |
+| 文件地址过期 | 低 | 下载失败 | 后端返回可刷新链接 |
 
 **回滚方式**: 停用 worker；保留表结构不再写入新任务。
 
 ## 7. 跨模块未决问题
 
-| #   | 问题                       | 影响范围           | 需要谁确认  |
-| --- | -------------------------- | ------------------ | ----------- |
-| 1   | 导出文件保存时长           | 存储成本与下载策略 | 产品 / 运维 |
-| 2   | 是否需要限制每人并发导出数 | 服务负载控制       | 后端负责人  |
+| # | 问题 | 影响范围 | 需要谁确认 |
+| --- | --- | --- | --- |
+| 1 | 导出文件保存时长 | 存储成本与下载策略 | 产品 / 运维 |
+| 2 | 是否需要限制每人并发导出数 | 服务负载控制 | 后端负责人 |
 
-以上是本示例保留的待确认项。实际实施前须确认会影响行为的参数并回写设计；不能把带阻塞项的示例直接当作已批准的完整实施规格。
+导出文件保存时长和并发限制尚未确定，相关接口与容量验收受阻。

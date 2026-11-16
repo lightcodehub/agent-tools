@@ -17,15 +17,11 @@
 - 负责: 任务创建/查询 API、任务表与迁移、参数校验
 - 不负责: CSV 文件生成（由 csv 模块负责）
 
-### 1.1 依赖说明
+### 1.2 调用方约束
 
-无模块间依赖（本模块为被依赖方）。
-
-### 1.2 被依赖说明
-
-| 被依赖模块             | 本模块提供的内容          | 本模块对应章节             |
-| ---------------------- | ------------------------- | -------------------------- |
-| [csv](../csv/index.md) | `ExportTask` 类型、任务表 | §4 数据结构、§5 数据库设计 |
+| 调用方 | 使用方式 | 调用或兼容约束 |
+| --- | --- | --- |
+| [csv](../csv/index.md) | 使用 `ExportTask` 类型和任务表 | 类型、字段及状态取值引用本模块 §4、§5 定义 |
 
 ## 2. 核心流程
 
@@ -49,15 +45,15 @@ flowchart TD
 
 **请求参数**:
 
-| 参数    | 位置 | 类型   | 必填 | 说明             |
-| ------- | ---- | ------ | ---- | ---------------- |
-| filters | body | object | 是   | 当前订单筛选条件 |
+| 参数 | 位置 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- | --- |
+| filters | body | object | 是 | 当前订单筛选条件 |
 
 **返回**:
 
-| 字段   | 类型   | 说明             |
-| ------ | ------ | ---------------- |
-| taskId | string | 导出任务 ID      |
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| taskId | string | 导出任务 ID |
 | status | string | 固定为 `pending` |
 
 **错误码**: 400 参数错误 / 500 内部错误
@@ -68,12 +64,12 @@ flowchart TD
 
 **返回**:
 
-| 字段         | 类型   | 说明                                         |
-| ------------ | ------ | -------------------------------------------- |
-| taskId       | string | 任务 ID                                      |
-| status       | string | `pending` / `running` / `success` / `failed` |
-| fileUrl      | string | 成功时返回下载地址                           |
-| errorMessage | string | 失败时返回错误信息                           |
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| taskId | string | 任务 ID |
+| status | string | `pending` / `running` / `success` / `failed` |
+| fileUrl | string | 成功时返回下载地址 |
+| errorMessage | string | 失败时返回错误信息 |
 
 **错误码**: 404 任务不存在 / 500 内部错误
 
@@ -81,18 +77,18 @@ flowchart TD
 
 #### `createExportTask(userId: string, filters: OrderFilters): Promise<ExportTask>`
 
-| 参数    | 类型         | 必填 | 说明     |
-| ------- | ------------ | ---- | -------- |
-| userId  | string       | 是   | 发起人   |
-| filters | OrderFilters | 是   | 筛选条件 |
+| 参数 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| userId | string | 是 | 发起人 |
+| filters | OrderFilters | 是 | 筛选条件 |
 
 **返回**: `Promise<ExportTask>` — 新建的导出任务
 
 #### `getExportTask(taskId: string): Promise<ExportTask>`
 
-| 参数   | 类型   | 必填 | 说明    |
-| ------ | ------ | ---- | ------- |
-| taskId | string | 是   | 任务 ID |
+| 参数 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| taskId | string | 是 | 任务 ID |
 
 **返回**: `Promise<ExportTask>` — 任务记录
 
@@ -100,7 +96,7 @@ flowchart TD
 
 ### OrderFilters
 
-本示例的订单筛选契约在本模块唯一维护，csv 模块直接引用。空对象表示不增加筛选条件；不接受未知字段，已提供字段不得为 null。
+订单筛选契约由本模块定义，csv 模块引用该定义。空对象表示不增加筛选条件；不接受未知字段，已提供字段不得为 null。
 
 ```typescript
 interface OrderFilters {
@@ -152,29 +148,27 @@ erDiagram
 
 #### `order_export_tasks`
 
-| 字段          | 类型          | 约束                        | 说明         |
-| ------------- | ------------- | --------------------------- | ------------ |
-| id            | BIGINT        | PK, AUTO_INCREMENT          | 主键         |
-| user_id       | BIGINT        | NOT NULL                    | 发起用户     |
-| filters       | JSON          | NOT NULL                    | 筛选条件快照 |
-| status        | VARCHAR(20)   | NOT NULL, DEFAULT 'pending' | 任务状态     |
-| file_url      | VARCHAR(1024) | NULL                        | 导出文件地址 |
-| error_message | TEXT          | NULL                        | 失败原因     |
-| created_at    | TIMESTAMP     | NOT NULL                    | 创建时间     |
-| updated_at    | TIMESTAMP     | NOT NULL                    | 更新时间     |
+| 字段 | 类型 | 约束 | 说明 |
+| --- | --- | --- | --- |
+| id | BIGINT | PK, AUTO_INCREMENT | 主键 |
+| user_id | BIGINT | NOT NULL | 发起用户 |
+| filters | JSON | NOT NULL | 筛选条件快照 |
+| status | VARCHAR(20) | NOT NULL, DEFAULT 'pending' | 任务状态 |
+| file_url | VARCHAR(1024) | NULL | 导出文件地址 |
+| error_message | TEXT | NULL | 失败原因 |
+| created_at | TIMESTAMP | NOT NULL | 创建时间 |
+| updated_at | TIMESTAMP | NOT NULL | 更新时间 |
 
 ### 索引设计
 
-| 表                 | 索引名              | 字段                | 类型  | 用途              |
-| ------------------ | ------------------- | ------------------- | ----- | ----------------- |
-| order_export_tasks | idx_user_created_at | user_id, created_at | BTREE | 用户最近任务查询  |
-| order_export_tasks | idx_status          | status              | BTREE | worker 扫描待处理 |
+| 表 | 索引名 | 字段 | 类型 | 用途 |
+| --- | --- | --- | --- | --- |
+| order_export_tasks | idx_user_created_at | user_id, created_at | BTREE | 用户最近任务查询 |
+| order_export_tasks | idx_status | status | BTREE | worker 扫描待处理 |
 
-### 迁移说明
+### 结构与数据变更
 
-- 新增表: `order_export_tasks`
-- 变更表: 无
-- 数据迁移: 无历史数据
+新增 `order_export_tasks` 表，使用项目现有迁移机制创建；无存量数据需要转换。
 
 ## 7. 影响面与兼容性
 
@@ -187,35 +181,28 @@ erDiagram
 
 ### 8.1 测试策略
 
-- **测试框架**: Vitest
-- **工作目录**: 由入口显式接收项目根绝对路径；切换到该根目录后执行以下命令，根级 `vitest.config.ts` 的 root 也设为该路径
-- **源码准入**: TypeScript `.ts`；单元文件 `*.test.ts`、集成文件 `*.integration.test.ts`，用 `test`/`it` 注册行为名；support 仅 `.ts` 且有实际调用，不存 fixture 或配置
-- **模块运行命令**: `npx --no-install vitest run tests/task/unit`
-- **项目完整单元测试命令**: `npx --no-install vitest run --exclude 'tests/*/integration/**'`
-- **Mock 策略**: mock repository、job runner
-- **依赖模块 mock**: 无
-- **运行隔离**: 运行入口生成 UUID 作为 run-id 并先创建 `build/tests/runs/{run-id}/`；模块用例及参数实例独立使用 `data/task/{case-id}/`。根级配置将 JSON/JUnit、日志及启用时的覆盖率和缓存输出重定向到本轮 `artifacts/`。
-- **数据与辅助源码**: `tests/task/support/scenario.ts` 提供最小字段构造器，被 §8.3 的测试实际调用；测试所需文件及临时程序在用例 data 目录创建，不提交样本。无固定数据集、无外部位置例外，不创建对应空目录。
-- **清理**: 用例 teardown 清理各自数据与替身，运行入口的退出处理回收本轮资源；失败、取消、超时后检查并补清理。失败 artifacts 保留到问题定位结束后由本轮执行者删除，developer 证据在 validator 读取后清理，validator 成功产物在报告生成后清理，不触碰其他运行。
-- **真实性**: 运行前断言依赖接口可调用、初始任务状态和替身行为符合用例；错误断言匹配设计错误，不把无关 EOF 或未处理异常算通过。本例无重要防护类回归，新增此类回归时补负向设计。
-- **Git**: 根 `.gitignore` 含 `/build/`，交付前检查忽略覆盖、Git 索引和拟提交文件；原有散落测试迁至 §8.3，调整导入及发现配置，清理失效引用。
+**公共约定**: [项目测试约定](../index.md#32-测试约定)。
+
+- **模块单元命令**: `node test-runner.mjs --kind unit --module task`。
+- **真实调用与替身边界**: service 用受控 repository、job runner；repository 替换数据库客户端；controller 替换 service。各层使用自身真实实现，验证参数、返回和错误传播。
+- **前置条件**: 测试前确认被测接口可调用，依赖替身返回值与错误符合对应用例。
 
 ### 8.2 测试用例
 
 #### `createExportTask` 测试
 
-| 用例编号      | 用例                | 输入              | 预期输出            | 类型       | 状态      |
-| ------------- | ------------------- | ----------------- | ------------------- | ---------- | --------- |
+| 用例编号 | 用例 | 输入 | 预期输出 | 类型 | 状态 |
+| --- | --- | --- | --- | --- | --- |
 | `task-UT-001` | 正常路径 - 创建成功 | `filters={status: 'paid'}` | 返回 `pending` 任务 | happy path | ⏳ 待实现 |
-| `task-UT-002` | 边界 - 空筛选条件   | `{}`              | 导出全部数据        | boundary   | ⏳ 待实现 |
-| `task-UT-003` | 异常 - 无效 filters | `{invalid: true}` | 抛出参数错误        | error      | ⏳ 待实现 |
+| `task-UT-002` | 边界 - 空筛选条件 | `{}` | 导出全部数据 | boundary | ⏳ 待实现 |
+| `task-UT-003` | 异常 - 无效 filters | `{invalid: true}` | 抛出参数错误 | error | ⏳ 待实现 |
 
 #### `getExportTask` 测试
 
-| 用例编号      | 用例                | 输入              | 预期输出       | 类型       | 状态      |
-| ------------- | ------------------- | ----------------- | -------------- | ---------- | --------- |
-| `task-UT-004` | 正常路径 - 查询成功 | 存在的 `taskId`   | 返回任务记录   | happy path | ⏳ 待实现 |
-| `task-UT-005` | 异常 - 任务不存在   | 不存在的 `taskId` | 抛出 not found | error      | ⏳ 待实现 |
+| 用例编号 | 用例 | 输入 | 预期输出 | 类型 | 状态 |
+| --- | --- | --- | --- | --- | --- |
+| `task-UT-004` | 正常路径 - 查询成功 | 存在的 `taskId` | 返回任务记录 | happy path | ⏳ 待实现 |
+| `task-UT-005` | 异常 - 任务不存在 | 不存在的 `taskId` | 抛出 not found | error | ⏳ 待实现 |
 
 #### repository 与 controller 测试
 
@@ -228,16 +215,16 @@ erDiagram
 | `task-UT-010` | controller 非法参数 | filters 缺失或类型错误 | 返回 400，不调用 service | error | ⏳ 待实现 |
 | `task-UT-011` | controller 查询不存在任务 | mock service 抛出 not found | 返回 404 | error | ⏳ 待实现 |
 
-### 8.3 测试文件规划
+### 8.3 测试文件与数据
 
-| 测试文件                                               | 覆盖目标          |
-| ------------------------------------------------------ | ----------------- |
-| `tests/task/unit/order-export.service.test.ts`    | 任务创建/查询逻辑 |
-| `tests/task/unit/order-export.controller.test.ts` | 请求校验与响应    |
+| 测试文件 | 覆盖目标 |
+| --- | --- |
+| `tests/task/unit/order-export.service.test.ts` | 任务创建/查询逻辑 |
+| `tests/task/unit/order-export.controller.test.ts` | 请求校验与响应 |
 | `tests/task/unit/order-export.repository.test.ts` | 数据库调用与记录映射 |
 | `tests/task/support/scenario.ts` | 最小场景构造，由上述单元测试调用 |
 
-> 项目唯一规范测试报告固定写入 `tests/test-report.md`，由 validator 独占维护，不为本模块创建独立报告。
+**数据准备**: `tests/task/support/scenario.ts` 为上述测试构造最小场景。本模块用例只使用内存数据。
 
 > 与 csv 的跨模块协作验证由调用方 [csv §8.4](../csv/index.md#84-项目内集成验证) 定义，本模块不重复定义同一集成用例。
 
@@ -245,14 +232,12 @@ erDiagram
 
 | 步骤 | 可测试单元 | 涉及文件 | 对应设计 | 用例编号 | 依赖 | 状态 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 定义类型、迁移与 repository，立即测试记录映射、空结果和数据库错误；迁移另在测试库验证 | `server/db/migrations/*`、`server/modules/order/order-export.repository.ts` 及对应测试 | §4、§5、§8 | `task-UT-006` 至 `008` | — | ⏳ 待实现 |
+| 1 | 配置项目测试入口，定义类型、迁移与 repository，立即测试记录映射、空结果和数据库错误；迁移另在测试库验证 | `test-runner.mjs`、`vitest.config.ts`、`server/db/migrations/*`、`server/modules/order/order-export.repository.ts` 及对应测试 | 总文档 §3.2、本模块 §4、§5、§8 | `task-UT-006` 至 `008` | — | ⏳ 待实现 |
 | 2 | 实现 service，立即编写并运行创建、查询测试 | `server/modules/order/order-export.service.ts` 及对应测试 | §3、§8 | `task-UT-001` 至 `005` | 步骤 1 | ⏳ 待实现 |
 | 3 | 实现 controller，立即编写并运行请求及响应测试 | `server/modules/order/order-export.controller.ts` 及对应测试 | §3、§8 | `task-UT-009` 至 `011` | 步骤 2 | ⏳ 待实现 |
 | 4 | 运行全量回归并按验收标准核验 | §8.3 全部测试文件 | §8、§10 | `task-UT-001` 至 `011` | 步骤 3 | ⏳ 待实现 |
 
 ## 10. 验收标准
-
-> developer 按 §9 实现、自测并提交本轮 artifacts 供核对；validator 独立审查和运行回归及设计 IT 后回写本节和模块头部。自测通过不等于技术验收通过，部分项通过不代表整模块完成。
 
 | # | 对应需求 | 设计位置 | 验收项 | 用例编号或核验方法 | 状态 |
 | --- | --- | --- | --- | --- | --- |
@@ -263,9 +248,9 @@ erDiagram
 
 ## 11. 未决问题
 
-| #   | 问题                             | 影响范围     | 需要谁确认 |
-| --- | -------------------------------- | ------------ | ---------- |
-| 1   | 筛选条件快照的 JSON 字段容量上限 | 表结构设计   | 后端负责人 |
-| 2   | 是否需要支持按时间范围批量导出   | API 参数设计 | 产品       |
+| # | 问题 | 影响范围 | 需要谁确认 |
+| --- | --- | --- | --- |
+| 1 | 筛选条件快照的 JSON 字段容量上限 | 表结构设计 | 后端负责人 |
+| 2 | 是否需要支持按时间范围批量导出 | API 参数设计 | 产品 |
 
-上述事项尚待确认；在其影响范围内不得绕过设计确认直接实施。确认后原位更新 §3/§4/§5 及关联测试，不追加方案历史。
+筛选快照容量和时间范围筛选规则尚未确定，相关表结构与参数验收受阻。

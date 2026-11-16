@@ -54,6 +54,7 @@ plugins/inspector/
     │   └── integration-test-report.md
     └── references/
         ├── checklist.md
+        ├── document-style.md
         ├── reporting.md
         └── test-management.md
 ```

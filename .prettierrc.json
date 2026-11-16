@@ -1,0 +1,12 @@
+{
+  "overrides": [
+    {
+      "files": "**/*.md",
+      "options": {
+        "proseWrap": "never",
+        "printWidth": 1,
+        "embeddedLanguageFormatting": "off"
+      }
+    }
+  ]
+}
