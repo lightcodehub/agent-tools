@@ -18,7 +18,7 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 | --- | --- | --- | --- | --- |
-| fileId | path | string | 是 | 文件 ID |
+| fileId | path | `string` | 是 | 文件 ID |
 
 **返回**: 文件二进制流
 
@@ -34,12 +34,12 @@
 
 | 参数 | 位置 | 类型 | 必填 | 说明 |
 | --- | --- | --- | --- | --- |
-| fileId | body | string | 是 | 文件 ID |
+| fileId | body | `string` | 是 | 文件 ID |
 | expiresIn | body | int | 否 | 有效期（秒），默认 3600 |
 
 **返回**:
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| signedUrl | string | 签名 URL |
-| expiresAt | string | 过期时间 |
+| signedUrl | `string` | 签名 URL |
+| expiresAt | `string` | 过期时间 |

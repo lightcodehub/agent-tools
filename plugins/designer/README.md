@@ -36,7 +36,7 @@ claude --plugin-dir ./plugins/designer
 
 ## Included skills
 
-- `architect` — 架构设计：先读代码，再输出结构化设计文档（API、流程图、DB 设计、组件设计、测试设计）
+- `architect` — 开发设计：先读需求与代码，再输出概要设计、代码架构设计和模块功能详细设计
 
 ## 职责交接
 
@@ -59,9 +59,11 @@ plugins/designer/
         │   ├── api-module.md
         │   ├── api-service.md
         │   ├── design-index.md
-        │   └── design-module.md
+        │   ├── design-module.md
+        │   └── visual-spec.md
         └── references/
             ├── checklist.md
+            ├── coding-conventions.md
             ├── document-style.md
             ├── test-management.md
             └── examples/

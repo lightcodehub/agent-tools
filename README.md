@@ -6,7 +6,7 @@ Codex / Claude Code plugin marketplace — designer 负责设计，engineer 负�
 
 | designer（设计者） | engineer（工程师） | inspector（检验员） |
 | --- | --- | --- |
-| `architect` 架构师：定义预期、用例与验收标准 | `developer` 开发者：实现、编写测试、自测与修复 | `validator` 验证人员：审查、执行验证、核验证据与技术验收 |
+| `architect` 架构师：概要设计、代码架构与功能详细设计 | `developer` 开发者：实现、编写测试、自测与修复 | `validator` 验证人员：审查、执行验证、核验证据与技术验收 |
 
 三个插件在消费项目中按角色分工。设计文档是共同依据；developer 提供自测证据，validator 重新核验并独占维护 `tests/test-report.md`。用户负责产品验收与发布决定。
 
