@@ -52,10 +52,13 @@ plugins/engineer/
     ├── developer/
     │   ├── SKILL.md
     │   ├── README.md
+    │   ├── scripts/
+    │   │   └── read_section.py
     │   └── references/
     │       ├── checklist.md
     │       ├── coding-conventions.md
     │       ├── document-style.md
+    │       ├── scoped-reading.md
     │       ├── skill-writing-guide.md
     │       └── test-management.md
     └── discover-skills/

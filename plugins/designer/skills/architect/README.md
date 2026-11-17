@@ -153,10 +153,13 @@ skills/architect/
 │   ├── design-index.md
 │   ├── design-module.md
 │   └── visual-spec.md
+├── scripts/
+│   └── read_section.py
 └── references/
     ├── checklist.md
     ├── coding-conventions.md
     ├── document-style.md
+    ├── scoped-reading.md
     ├── test-management.md
     └── examples/
         ├── index.md
@@ -182,6 +185,8 @@ skills/architect/
   - 外部服务总览和 API 模块文档模板
 - `references/coding-conventions.md`
   - 项目公共编码约定的提取、实现与审查规则
+- `references/scoped-reading.md`
+  - 总设计索引、依赖契约与调用方驱动的定向阅读规则
 - `references/test-management.md`
   - 源码准入、数据与产物路径、清理、唯一报告和 Git 检查规范
 - `references/checklist.md`
@@ -268,3 +273,9 @@ architect 定义行为预期、用例与验收标准，developer 编写实现和
 总文档的新项目设计与存量补档均按架构模块、层和包组织，不列内部实现文件或函数入口。具体代码映射在模块详细设计维护；仅文件本身构成独立架构模块时可注明文件名，依赖图仍使用模块名称。配置引用、测试命令和文档链接不作为架构单元。
 
 跨模块读写及状态变化必须有归属明确的操作契约，并与调用方依赖、测试及实施前提对应。单元验证本层可观察结果，异步下游产物由实际模块或真实集成验证；共享类型、表结构或替身成功都不能代替这些证据。
+
+## 定向读取
+
+依据 [定向读取规则](references/scoped-reading.md)，总设计兼作模块与依赖索引：先定位目标及公共约束，再读相关设计、契约和实现。依赖内部细节按需展开，公开契约变更时核对调用方；索引失效或出现新证据时扩大范围。读取量优化不改变实现授权、必要回归和独立审查要求。
+
+`scripts/read_section.py` 使用 Python 3 标准库，提供 Markdown 标题列表与精确章节读取；只输出所选章节，不修改项目文件、不缓存正文。用它承接总设计中的契约链接，避免宽行号读取带入相邻契约。

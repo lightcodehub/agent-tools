@@ -61,10 +61,13 @@ plugins/designer/
         │   ├── design-index.md
         │   ├── design-module.md
         │   └── visual-spec.md
+        ├── scripts/
+        │   └── read_section.py
         └── references/
             ├── checklist.md
             ├── coding-conventions.md
             ├── document-style.md
+            ├── scoped-reading.md
             ├── test-management.md
             └── examples/
                 ├── index.md

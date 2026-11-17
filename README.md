@@ -105,6 +105,8 @@ agent-tools/
 
 ## 插件协作
 
+三个角色以总设计作为模块与依赖索引，按任务读取关联设计、契约和实现；接口变更或新证据触发必要扩展，不默认加载全部模块。具体规则见 [定向读取](plugins/designer/skills/architect/references/scoped-reading.md)，必要回归和独立审查要求保持不变。
+
 完整实现与技术验收流程使用 engineer 和 inspector；需要设计或补充设计时使用 designer。inspector 可独立验证已有项目，并将设计问题和实现问题分别交给 architect 与 developer。报告模板随 inspector 分发。仓库维护不自动修改已安装插件缓存或用户注册入口。
 
 ## 测试管理约定

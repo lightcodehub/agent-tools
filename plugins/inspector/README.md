@@ -52,10 +52,13 @@ plugins/inspector/
     │   ├── test-report.md
     │   ├── unit-test-report.md
     │   └── integration-test-report.md
+    ├── scripts/
+    │   └── read_section.py
     └── references/
         ├── checklist.md
         ├── coding-conventions.md
         ├── document-style.md
+        ├── scoped-reading.md
         ├── reporting.md
         └── test-management.md
 ```
