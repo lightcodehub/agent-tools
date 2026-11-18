@@ -60,6 +60,7 @@ plugins/engineer/
     │       ├── document-style.md
     │       ├── module-design.md
     │       ├── scoped-reading.md
+    │       ├── self-test.md
     │       ├── skill-writing-guide.md
     │       └── test-management.md
     └── discover-skills/

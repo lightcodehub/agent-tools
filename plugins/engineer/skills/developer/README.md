@@ -24,7 +24,7 @@
 
 所有路径从消费项目根目录解析。源码固定在 `tests/{module}/unit/`、`integration/` 及实际调用的 support，数据与产物在 `build/tests/`。详细要求见 [测试管理规范](references/test-management.md)。
 
-每轮自测先确定唯一 run-id、捕获当时源码/配置快照并配置参数实例采证，数据按模块和用例隔离。方法级结果不能替代实例证据，后续验收结果不能反填早期自测。自测摘要和原始结果放本轮 artifacts；失败、中断或未启动同样如实记录，保留 validator 尚需读取的证据并说明清理时机。
+按[自测回执](references/self-test.md)记录每轮带时区的开始与完成时间。每轮自测先确定唯一 run-id、捕获当时源码/配置快照并配置参数实例采证，数据按模块和用例隔离。方法级结果不能替代实例证据，后续验收结果不能反填早期自测。自测摘要和原始结果放本轮 artifacts；失败、中断或未启动同样如实记录，保留 validator 尚需读取的证据并说明清理时机。
 
 developer 不写 `tests/test-report.md`。交验只传范围、设计和版本等事实、已知失败或阻塞及证据入口；旧报告已过期时说明适用版本。子代理按设计确定授权范围内应验证的行为并执行，开发对话和自测判断不随交接传入。
 
@@ -55,6 +55,7 @@ skills/developer/
     ├── coding-conventions.md
     ├── document-style.md
     ├── module-design.md
+    ├── self-test.md
     ├── scoped-reading.md
     ├── skill-writing-guide.md
     └── test-management.md
