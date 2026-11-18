@@ -4,9 +4,9 @@
 
 ## 服务信息
 
-- **基础地址**: `https://storage.internal/api/v2`
+- **服务地址**: `https://storage.internal`；各接口路径已包含版本前缀 `/api/v2`
 - **认证方式**: API Key（Header `X-API-Key`）
-- **公共请求头**: `Content-Type: application/json`
+- **请求类型**: 按各接口的请求体确定，无请求体的下载接口不要求设置 `Content-Type`
 
 ## API 模块索引
 

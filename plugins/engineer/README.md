@@ -37,7 +37,7 @@ claude --plugin-dir ./plugins/engineer
 
 ## 职责边界
 
-developer 保留自测责任，自测证据放本轮 artifacts；不生成规范报告或自行判定技术验收。正常端到端交付衔接 inspector:validator，后者独立审查、验证并维护唯一报告。缺少 validator 时如实交付实施与自测成果，不能声称已独立验收。
+developer 负责自测并保留本轮证据。正式交验时，新建不继承开发对话的 `/inspector:validator` 子代理，由它审查、执行验证并维护唯一报告。无法隔离时交付已有成果，注明“未执行独立验收”；同一上下文复核不能代替独立验收。
 
 当前开发入口为 `/engineer:developer`。插件安装与项目 skill 注册由用户管理，仓库维护不自动修改已安装缓存或用户注册链接。
 
@@ -58,6 +58,7 @@ plugins/engineer/
     │       ├── checklist.md
     │       ├── coding-conventions.md
     │       ├── document-style.md
+    │       ├── module-design.md
     │       ├── scoped-reading.md
     │       ├── skill-writing-guide.md
     │       └── test-management.md
@@ -75,6 +76,14 @@ plugins/engineer/
 ```
 
 ## Uninstall
+
+### Codex
+
+```bash
+codex plugin remove engineer@agent-tools
+```
+
+### Claude Code
 
 ```text
 /plugin uninstall engineer

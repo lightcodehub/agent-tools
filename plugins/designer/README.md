@@ -40,7 +40,7 @@ claude --plugin-dir ./plugins/designer
 
 ## 职责交接
 
-architect 定义设计、具体用例与验收标准；[engineer:developer](../engineer/skills/developer/SKILL.md) 实现并自测；[inspector:validator](../inspector/skills/validator/SKILL.md) 独立审查、验证并维护唯一报告和技术验收结论。设计交付不等于实现完成，自测通过不等于技术验收通过。
+architect 定义设计、具体用例与验收标准；[engineer:developer](../engineer/skills/developer/SKILL.md) 实现并自测；[inspector:validator](../inspector/skills/validator/SKILL.md) 在未参与本轮实现且未继承开发对话的上下文中验证并维护唯一报告和技术验收结论。设计交付不等于实现完成，自测通过不等于技术验收通过。
 
 ## Structure
 
@@ -67,6 +67,7 @@ plugins/designer/
             ├── checklist.md
             ├── coding-conventions.md
             ├── document-style.md
+            ├── module-design.md
             ├── scoped-reading.md
             ├── test-management.md
             └── examples/
@@ -80,6 +81,14 @@ plugins/designer/
 ```
 
 ## Uninstall
+
+### Codex
+
+```bash
+codex plugin remove designer@agent-tools
+```
+
+### Claude Code
 
 ```text
 /plugin uninstall designer

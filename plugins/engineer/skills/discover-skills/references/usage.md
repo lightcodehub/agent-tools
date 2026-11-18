@@ -61,10 +61,10 @@ python3 <skill-dir>/scripts/register_skills.py <project-root> --agent both
 
 ## 输出与验证
 
-JSON 返回扫描清单、范围、排除项、诊断及 `registration`：
+正常扫描返回顶层扫描清单、范围、排除项、诊断及 `registration`。项目根目录无效时返回 `{"ok": false, "error": "..."}`，退出码为 1，不生成注册清单。
 
-- `actions`：入口、源路径及状态：removed、created、unchanged、would_remove、would_create、conflict、skipped、error。清理项附 old_target 和 reason。预览按执行顺序模拟入口；多个 agent 共用目录时只计划创建一次，后续 unchanged 带 `projected: true`，表示复用本轮此前的计划结果，不表示链接已落盘。
-- `counts`：按状态汇总。即使没有可注册来源，也可能包含残留入口的清理记录；没有任何动作时为空。
+- `registration.actions`：入口、源路径及状态：removed、created、unchanged、would_remove、would_create、conflict、skipped、error。清理项附 old_target 和 reason。预览按执行顺序模拟入口；多个 agent 共用目录时只计划创建一次，后续 unchanged 带 `projected: true`，表示复用本轮此前的计划结果，不表示链接已落盘。
+- `registration.counts`：按状态汇总。即使没有可注册来源，也可能包含残留入口的清理记录；没有任何动作时为空。
 - `scan_complete`：只表示声明扫描策略内未出现诊断错误，不代表已扫描全部外部依赖。
 - `ok`：清理与扫描无错误，且注册没有冲突、跳过或错误。部分失败仍保留已完成的清理及成功创建的链接，并返回未完成项。
 - 退出码：0 成功；1 存在扫描错误、冲突或未完成项；2 参数或依赖问题。

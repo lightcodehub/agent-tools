@@ -28,7 +28,7 @@
 
 ### `POST /api/v2/sign-url`
 
-**描述**: 获取签名下载 URL。
+**描述**: 获取签名下载 URL。请求体使用 `application/json`。
 
 **请求参数**:
 

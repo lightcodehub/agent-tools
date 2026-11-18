@@ -49,10 +49,10 @@ flowchart LR
 
 | 模块 | 职责摘要 | 模块归属与组织边界 | 详细设计 |
 | --- | --- | --- | --- |
-| task | 管理导出请求与可查询的任务记录 | 规划归属订单域 `server/modules/order/`；负责任务创建、查询、受控状态迁移及持久化，不执行文件生成 | [task](./task/index.md)；[任务契约](./task/index.md#32-函数方法接口) |
-| csv | 执行后台导出并记录结果 | 规划归属后台作业层 `server/jobs/`；承接执行器调度，依赖任务契约和文件存储能力 | [csv](./csv/index.md)；[处理契约](./csv/index.md#32-函数方法接口) |
+| task | 管理导出请求与可查询的任务记录 | 规划归属订单域 `server/modules/order/`；负责任务创建、查询、受控状态迁移及持久化，不执行文件生成 | [task](./task/index.md)；[功能索引](./task/index.md#function-index) |
+| csv | 执行后台导出并记录结果 | 规划归属后台作业层 `server/jobs/`；承接执行器调度，依赖任务契约和文件存储能力 | [csv](./csv/index.md)；[处理契约](./csv/index.md#process-export) |
 
-任务持久化与状态迁移规则归订单域管理；后台作业通过任务模块契约领取任务和写回结果，不直接访问任务存储。调度、订单查询和文件存储复用项目既有能力。各模块的具体实现映射见其详细设计，公共测试执行约定见 §5.2。
+任务持久化与状态迁移规则归订单域管理；后台作业通过任务模块契约领取任务和写回结果，不直接访问任务存储。调度、订单查询和文件存储复用项目既有能力，具体行为与实现映射见归属模块的详细设计。
 
 ### 3.2 依赖与协作
 
@@ -68,7 +68,7 @@ task 通过既有 job runner 接口投递任务，不直接依赖 csv 实现；c
 | 能力或共享契约 | 归属模块或层 | 使用方及约束 | 详细设计 |
 | --- | --- | --- | --- |
 | 筛选条件与任务类型 | task | csv 直接引用同一类型和状态定义，不维护副本 | [task 数据结构](./task/index.md#4-数据结构) |
-| 任务创建、查询与状态更新契约 | task | 后台按条件迁移领取及写回；冲突、终态保护与存储错误由 task 契约定义 | [task API](./task/index.md#3-api-定义) |
+| 任务创建、查询与状态更新契约 | task | 后台按条件迁移领取及写回；冲突、终态保护与存储错误由 task 契约定义 | [task 功能索引](./task/index.md#function-index) |
 | 文件上传接口 | 文件存储服务；项目既有 client | csv 传递实际生成内容，错误按 csv 契约处理 | [上传接口](./external-service/storage/upload.md#post-api-v2-upload) |
 
 ### 3.4 依赖检查
@@ -93,10 +93,10 @@ task 通过既有 job runner 接口投递任务，不直接依赖 csv 实现；c
 | 规范依据与检查 | 采用本节 TypeScript 编码约定；未提供可核验的格式化、静态或类型检查配置及命令，不宣称已配置或执行 | 全项目业务代码；人工逐项审查本表规则，§5.2 的业务测试不代替风格检查 |
 | 命名与接口风格 | 文件名使用 `kebab-case`，类型名使用 `PascalCase`，函数和变量使用 `camelCase`；2 空格缩进、单引号、无分号；仅导出公开契约所需符号 | 公开接口与内部实现；人工核对命名、格式和导出边界 |
 | 类型与数据约定 | 公共类型引用唯一维护定义；类型标注和断言不替代必要边界校验，不隐式引入未定义默认值；具体字段契约见 [task 数据结构](./task/index.md#4-数据结构) | 共享定义和输入边界；核对声明引用与接口校验，局部取值不在总表重复 |
-| 错误处理 | 按接口契约自然传播错误，仅在承担语义转换、恢复或诊断责任的边界处理；不吞错、返回默认成功或逐层重复记录 | 项目公共调用边界；人工审查传播责任，具体行为及用例见 [task API](./task/index.md#3-api-定义)、[csv API](./csv/index.md#3-api-定义) |
-| 资源与执行 | 取得资源的一方承担释放责任，不关闭借用的共享资源；覆盖实际适用退出路径，清理错误不隐式覆盖业务异常；具体生命周期与终态规则见 [csv API](./csv/index.md#3-api-定义) | 实际持有资源的代码；沿所有权与调用链审查，并核对模块异常用例 |
+| 错误处理 | 按接口契约自然传播错误，仅在承担语义转换、恢复或诊断责任的边界处理；不吞错、返回默认成功或逐层重复记录 | 项目公共调用边界；人工审查传播责任，具体行为及用例见 [task 功能索引](./task/index.md#function-index)、[csv 功能索引](./csv/index.md#function-index) |
+| 资源与执行 | 取得资源的一方承担释放责任，不关闭借用的共享资源；覆盖实际适用退出路径，清理错误不隐式覆盖业务异常；具体生命周期与终态规则见 [csv 功能索引](./csv/index.md#function-index) | 实际持有资源的代码；沿所有权与调用链审查，并核对模块异常用例 |
 | 配置与依赖使用 | 复用既有配置入口与依赖接口，不在业务模块重复建立配置、连接或日志系统；默认值仅来自已定义配置或契约 | 所有依赖使用方；核对初始化和调用位置，能力归属见 §3，共享参数未决项见 §6.2 |
-| 日志 | 使用项目已有日志入口，按责任边界及模块事件契约记录，避免逐层重复；字段最小化，不记录凭据或未经允许的完整输入输出，无观测职责的纯计算逻辑不新增日志 | 有诊断职责的边界代码；核对 [task 事件](./task/index.md#33-日志与诊断) 与 [csv 事件](./csv/index.md#32-函数方法接口) 的责任、字段及对应测试 |
+| 日志 | 使用项目已有日志入口，按责任边界及模块事件契约记录，避免逐层重复；字段最小化，不记录凭据或未经允许的完整输入输出，无观测职责的纯计算逻辑不新增日志 | 有诊断职责的边界代码；核对 [task 事件](./task/index.md#request-diagnostics) 与 [csv 事件](./csv/index.md#process-export) 的责任、字段及对应测试 |
 | 注释与接口说明 | 公开函数使用 JSDoc 说明输入、返回、异常和必要副作用；非显然逻辑解释约束与取舍，不为明显的私有逻辑机械补注释 | 公开接口与非显然实现；对照模块契约人工核对说明与代码，不以注释数量判断完整性 |
 
 ### 5.2 测试约定
@@ -106,8 +106,9 @@ task 通过既有 job runner 接口投递任务，不直接依赖 csv 实现；c
 | 框架与配置 | 已安装的 Vitest，版本由锁文件确定；根级 `vitest.config.ts` 发现 `tests/*/unit/**/*.test.ts` 与 `tests/*/integration/**/*.integration.test.ts`，support 不作为独立用例执行 |
 | 根目录与入口 | 根级 `test-runner.mjs` 以自身目录定位项目根，工作目录与 Vitest root 均使用该绝对路径 |
 | 源码格式与命名 | TypeScript `.ts`；UT 为 `*.test.ts`，IT 为 `*.integration.test.ts`，通过 `test`/`it` 注册行为名；辅助源码为被测试实际调用的 `.ts` |
-| 全量单元命令 | `node test-runner.mjs --kind unit --module all` |
-| 全量集成命令 | `node test-runner.mjs --kind integration --module all` |
+| 全量单元命令 | `node "$PROJECT_ROOT/test-runner.mjs" --kind unit --module all` |
+| 全量集成命令 | `node "$PROJECT_ROOT/test-runner.mjs" --kind integration --module all` |
+| 用例编号 | 各模块使用自己的前缀（`task` 或 `csv`），UT 与 IT 在各自模块内分别按 §8 用例定义的出现顺序从 001 连续编号。模块迭代时可调整本模块编号，并同步本版设计和跨模块引用。developer 对齐测试，独立 validator 按新版本生成报告；既有报告按原版本解读 |
 | 运行标识 | `test-runner.mjs` 每次调用生成唯一 UUID；module 取模块索引名称，case-id 由用例编号及参数实例标识构成，并行实例独立分配 |
 | 临时数据 | `build/tests/runs/{run-id}/data/{module}/{case-id}/`；文件资源与临时辅助程序均在对应用例目录 |
 | 原始产物 | 根级配置将 JSON/JUnit、日志及启用的覆盖率/缓存输出到 `build/tests/runs/{run-id}/artifacts/` |
@@ -116,7 +117,7 @@ task 通过既有 job runner 接口投递任务，不直接依赖 csv 实现；c
 | 版本控制 | 根 `.gitignore` 包含 `/build/`，build 无受跟踪文件 |
 | 规范报告 | `tests/test-report.md` |
 
-**测试入口契约**: `test-runner.mjs --kind <unit|integration> --module <all|task|csv>`。入口创建唯一运行目录，将 `TEST_PROJECT_ROOT`、`TEST_RUN_ID`、`TEST_KIND`、`TEST_MODULE` 传给以项目根为工作目录启动的 `npx --no-install vitest run`，并透传退出码。根配置与测试辅助源码读取同一组环境变量，不各自生成 run-id；根配置按类别和模块选择上述固定发现路径并设置产物输出。调用入口无需依赖启动目录，直接调用 Vitest 不构成本文约定的验证命令。
+**测试入口契约**: 命令中的 `PROJECT_ROOT` 是调用方已定位的消费项目绝对路径。入口参数为 `test-runner.mjs --kind <unit|integration> --module <all|task|csv>`。入口创建唯一运行目录，将 `TEST_PROJECT_ROOT`、`TEST_RUN_ID`、`TEST_KIND`、`TEST_MODULE` 传给以项目根为工作目录启动的 `npx --no-install vitest run`，并透传退出码。根配置与测试辅助源码读取同一组环境变量，不各自生成 run-id；根配置按类别和模块选择上述固定发现路径并设置产物输出。调用入口无需依赖启动目录，直接调用 Vitest 不构成本文约定的验证命令。
 
 ## 6. 风险与待确认事项
 
@@ -135,4 +136,4 @@ task 通过既有 job runner 接口投递任务，不直接依赖 csv 实现；c
 | 文件生命周期 | 结果交付和存储成本 | 保留时长、过期行为及访问策略 | 产品、运维 |
 | 并发上限 | task 请求限制及 csv 容量 | 是否限制每人并发导出数及具体阈值 | 后端负责人 |
 
-上述参数尚未明确，相关接口约束与容量验收存在阻塞；模块内部问题见对应模块 §11。
+上述参数尚未明确，相关接口约束与容量验收存在阻塞；模块内部问题见对应模块 §11。task 的创建请求 `userId` 映射、创建与投递失败语义，以及 csv 的查询/格式/上传映射、runner 注册与查询/消费能力同样尚未明确；相关功能不能仅凭示例中的 API 签名或用例编号视为实施就绪。

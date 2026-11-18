@@ -66,7 +66,7 @@
 
 #### A.3.1 {模块A}
 
-- 设计文档：[design-doc/{module-a}/index.md](../design-doc/{module-a}/index.md)
+- 用例定义：[design-doc/{module-a}/index.md](../design-doc/{module-a}/index.md#82-测试用例)
 - 测试文件：`tests/{module-a}/unit/{测试文件}`
 - 模块状态：`PASS / FAIL / INCOMPLETE`
 
@@ -75,11 +75,11 @@
 | `{module-a}-UT-001` | {正常路径} | happy path | `{path}` | `{框架中的测试名称}` | PASS | {N} ms | — |
 | `{module-a}-UT-002` | {边界场景} | boundary | `{path}` | `{框架中的测试名称}` | FAIL | {N} ms | 见 §A.4 |
 | `{module-a}-UT-003` | {异常场景} | error | `{path}` | `{框架中的测试名称}` | SKIPPED / NOT_IMPLEMENTED / NOT_RUN | — | {原因} |
-| `{补充编号或 —}` | {补充用例} | happy path / boundary / error | `{path}` | `{框架中的测试名称}` | PASS / FAIL / SKIPPED / NOT_RUN | {N} ms | 设计外补充用例 |
+| `{已有补充编号或 —}` | {补充用例} | happy path / boundary / error | `{path}` | `{框架中的测试名称}` | PASS / FAIL / SKIPPED / NOT_RUN | {N} ms | 设计外补充用例 |
 
 #### A.3.2 {模块B}
 
-{按相同格式列出该模块全部测试用例。匹配的设计用例和实际测试合并为一条，不重复计数；参数化实例使用用例编号及参数标识逐条展开。设计外历史测试以文件路径、完整测试名和参数标识唯一定位。盘点不完整时明确列出未知范围。}
+{按相同格式列出该模块全部测试用例。覆盖归属取自本实例实际检验的契约；准备、观察和清理调用按其实际用途记录。匹配的设计用例和实际测试合并为一条，不重复计数；参数化实例沿用设计 ID 及参数标识逐条展开，实际定义章节不同时修正上述链接；不因报告排序重新编号。设计外历史测试以文件路径、完整测试名和参数标识唯一定位。盘点不完整时明确列出未知范围。}
 
 ### A.4 失败详情
 

@@ -10,7 +10,7 @@ Codex / Claude Code plugin marketplace — designer 负责设计，engineer 负�
 
 三个插件在消费项目中按角色分工。设计文档是共同依据；developer 提供自测证据，validator 重新核验并独占维护 `tests/test-report.md`。用户负责产品验收与发布决定。
 
-正常实现请求在同一任务中衔接设计、开发和验证，设计已有且有效时直接复用。独立验证请求也可直接进入 validator，不要求先执行 developer；仅验证不自动授权修改实现。`engineer` 另提供用户主动执行的 `discover-skills`。
+正常实现请求在同一任务中衔接设计、开发和验证，设计已有且有效时直接复用。developer 交验时必须启动不继承开发对话的 validator 子 agent。用户在未参与本轮实现的干净会话中直接调用 validator，即可就地独立验收。开发会话内的复核只交付实际结果，不形成技术验收结论或更新规范报告。仅验证不自动授权修改实现。`engineer` 另提供用户主动执行的 `discover-skills`。
 
 ## Add this marketplace
 
@@ -20,10 +20,10 @@ Codex / Claude Code plugin marketplace — designer 负责设计，engineer 负�
 codex plugin marketplace add lightcodehub/agent-tools
 ```
 
-For local development from this checkout:
+For local development, run this from the root of your checkout:
 
 ```bash
-codex plugin marketplace add /Users/xiaoming/Desktop/ss/agent-tools
+codex plugin marketplace add .
 ```
 
 ### Claude Code
@@ -104,6 +104,8 @@ agent-tools/
 - [inspector](plugins/inspector/README.md) — `validator`：代码与测试审查、独立验证、唯一报告与技术验收。
 
 ## 插件协作
+
+模块文档以功能组织详细行为：内部职责与共享规则集中维护，接口、流程和失败边界归所属功能，测试、实施与验收通过引用衔接。规则见 [模块设计](plugins/designer/skills/architect/references/module-design.md)。
 
 三个角色以总设计作为模块与依赖索引，按任务读取关联设计、契约和实现；接口变更或新证据触发必要扩展，不默认加载全部模块。具体规则见 [定向读取](plugins/designer/skills/architect/references/scoped-reading.md)，必要回归和独立审查要求保持不变。
 
