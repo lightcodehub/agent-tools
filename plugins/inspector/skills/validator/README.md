@@ -68,7 +68,7 @@ skills/validator/
     └── test-management.md
 ```
 
-执行时读取 [测试管理规范](references/test-management.md)、[报告规则](references/reporting.md) 和 [报告骨架](assets/test-report.md)，交付前使用 [自检清单](references/checklist.md)。所有运行资源遵守 build/tests 布局、隔离与清理规则。
+按入口的[规则索引](SKILL.md#按任务取用规则)定位需要的章节；只有允许写正式报告的独立验收才读取报告模板。交付前使用[对应检查项](references/checklist.md)。所有运行资源遵守 build/tests 布局、隔离与清理规则。
 
 ## 产出文档要求
 
