@@ -66,6 +66,7 @@ plugins/designer/
         └── references/
             ├── checklist.md
             ├── coding-conventions.md
+            ├── conditional-design.md
             ├── document-style.md
             ├── module-design.md
             ├── scoped-reading.md

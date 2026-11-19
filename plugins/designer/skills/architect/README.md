@@ -89,7 +89,7 @@ architect 负责澄清并写明业务规则、接口契约、异常和边界处�
 
 无论新设计、迭代、补档还是修复中的设计调整，都只保留当前有效方案。需要变更方案时原位改写，删除失效内容及已解决未决项；恢复既有设计的修复不新增过程记录，但须同步失效的现状描述。developer 可按证据直接同步不改变方案的事实和格式，涉及方案与契约变化交 architect。不在文档中回顾旧方案、追加修复经过或对照新旧版本，历史由 Git 保存。当前所需的兼容、迁移、回滚操作照常说明；时间与实施状态只保留当前值。
 
-影响行为、接口、测试或验收的变更，要同时将相关条目和模块头部改为待迭代；纯文字或排版修正不改变实施状态。
+变更后按[实施状态判定](references/document-style.md#实施状态判定)复核受影响条目和模块头部。已有实现需要返工才标待迭代；仅新增用例不改变已有业务的实现情况，纯文字或排版修正不改变状态。
 
 ### API 必须理出来
 
@@ -152,6 +152,7 @@ skills/architect/
 └── references/
     ├── checklist.md
     ├── coding-conventions.md
+    ├── conditional-design.md
     ├── document-style.md
     ├── module-design.md
     ├── scoped-reading.md
@@ -187,7 +188,8 @@ skills/architect/
 - `references/test-management.md`
   - 源码准入、数据与产物路径、清理、唯一报告和 Git 检查规范
 - `references/checklist.md`
-  - 设计文档写入后、交付前的自检清单
+  - 按总文档、模块用例和交付边界核对最终成稿
+- [专项设计](references/conditional-design.md)：仅在涉及 UI、持久化或外部 API 时查阅对应章节
 - `references/examples/` — 订单导出设计示例
   - `index.md` 总设计文档，`task/index.md` 和 `csv/index.md` 为两个业务模块，含依赖引用与循环检测
 
