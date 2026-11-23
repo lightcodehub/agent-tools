@@ -1,7 +1,7 @@
 {
   "name": "engineer",
   "description": "Engineering implementation plugin for writing code, tests, and self-test evidence before independent validation.",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "author": {
     "name": "lightcodehub"
   },

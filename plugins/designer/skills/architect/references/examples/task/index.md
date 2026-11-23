@@ -154,7 +154,9 @@ flowchart TD
 
 #### 验证关联
 
-[创建服务用例](#tests-create) `task-UT-001` 至 `003`；[存储与 HTTP 适配用例](#tests-adapters) `task-UT-006` 的保存参数断言及 `009`、`010`；[csv 集成用例](../csv/index.md#84-项目内集成验证) `csv-IT-003` 的“创建时不生成文件”断言。其他集成用例中的创建仅为前置准备。
+- `createExportTask`：[创建服务用例](#tests-create) `task-UT-001` 验证任务状态和创建事件，`002` 验证空筛选快照及投递，`003` 验证非法筛选条件的参数错误。
+- `POST /api/orders/export-tasks`：[HTTP 适配用例](#tests-adapters) `task-UT-009` 验证响应的任务标识和状态，`010` 验证非法请求返回 400 且不调用服务。成功响应使用服务替身，不证明实际投递。
+- 持久化边界：[存储用例](#tests-adapters) `task-UT-006` 仅取保存参数含 `filters` 的断言；同一用例的查询断言归查询功能。[跨模块用例](../csv/index.md#84-项目内集成验证) `csv-IT-003` 仅取“创建时不生成文件”的断言；其他场景中的创建只作准备。
 
 <a id="query-task"></a>
 
@@ -433,16 +435,18 @@ service 用受控 repository 验证业务校验、状态映射和返回；reposi
 
 > 与 csv 的跨模块协作验证由调用方 [csv 8.4 项目内集成验证](../csv/index.md#84-项目内集成验证) 定义，本模块不重复定义同一集成用例。
 
-“10. 验收标准”的数据库人工核验覆盖“5. 数据库设计”迁移、筛选快照读回及并发条件写入，与单元统计分开。使用本轮独有的空测试库，数据目录位于 `build/tests/runs/{run-id}/data/task/{case-id}/`；先断言连接目标和初态，结束后只回收本用例的测试库及目录，日志写入本轮 artifacts。测试库未就绪时，相关验收项保留待验证，不用数据库驱动替身的结果补位。
+“10. 验收标准”的数据库人工核验覆盖“5. 数据库设计”迁移、筛选快照读回及并发条件写入，与单元统计分开。更改迁移脚本、筛选字段映射或条件写入逻辑时，在测试库复验受影响的迁移、快照读回或并发领取行为。使用本轮独有的空测试库，数据目录位于 `build/tests/runs/{run-id}/data/task/{case-id}/`；先断言连接目标和初态，结束后只回收本用例的测试库及目录，日志写入本轮 artifacts。测试库未就绪时，相关验收项保留待验证，不用数据库驱动替身的结果补位。
 
 ## 9. 实施计划
 
 | 步骤 | 可测试单元 | 涉及文件 | 对应设计 | 用例编号 | 依赖 | 状态 |
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | 配置测试入口，定义类型、迁移与 repository，验证记录映射、错误和原子条件写入；迁移另在测试库验证 | `test-runner.mjs`、`vitest.config.ts`、`server/db/migrations/*`、`server/modules/order/order-export.repository.ts` 及对应测试 | [总设计：5.2 测试约定](../index.md#52-测试约定)、[2.2 领取与提交结果的共用更新契约](#transition-contract)、[4. 数据结构](#4-数据结构)、[5. 数据库设计](#5-数据库设计) | `task-UT-006` 至 `008`、`017`（按“8.2 测试用例”的存储边界与领取范围） | — | ⏳ 待实现 |
-| 2 | 实现创建、查询及状态迁移服务，立即编写并运行本层测试，不依赖 csv 导出结果 | `server/modules/order/order-export.service.ts` 及对应测试 | [创建导出任务](#create-task)、[查询导出任务](#query-task)、[领取导出任务](#claim-task)、[提交处理结果](#submit-result) | `task-UT-001` 至 `005`、`012` 至 `016` | 步骤 1 | ⏳ 待实现 |
-| 3 | 实现 controller，立即编写并运行请求及响应测试 | `server/modules/order/order-export.controller.ts` 及对应测试 | [创建导出任务](#create-task)、[查询导出任务](#query-task) | `task-UT-009` 至 `011` | 步骤 2 | ⏳ 待实现 |
-| 4 | 运行全量回归并按验收标准核验 | “8.3 测试文件与数据”所列文件 | [8. 测试设计](#8-测试设计)、[10. 验收标准](#10-验收标准) | `task-UT-001` 至 `017` | 步骤 3 | ⏳ 待实现 |
+| 2 | 实现按标识查询及不存在错误转换，运行服务单测 | `server/modules/order/order-export.service.ts` 及对应测试 | [查询导出任务](#query-task) | `task-UT-004`、`005` | 步骤 1；受控 repository 提供查询结果 | ⏳ 待实现 |
+| 3 | 实现创建、筛选校验和投递，运行创建服务用例 | `server/modules/order/order-export.service.ts` 及对应测试 | [创建导出任务](#create-task) | `task-UT-001` 至 `003` | 步骤 1；创建及投递契约就绪，runner 用替身 | ⏳ 待实现 |
+| 4 | 实现领取和提交共用的条件更新服务，验证迁移与失败后的状态 | `server/modules/order/order-export.service.ts` 及对应测试 | [共用更新契约](#transition-contract)、[领取导出任务](#claim-task)、[提交处理结果](#submit-result) | `task-UT-012` 至 `016` | 步骤 1；三种迁移均已在本步实现后运行整组参数实例 | ⏳ 待实现 |
+| 5 | 实现 HTTP 查询和创建适配，运行请求及响应测试 | `server/modules/order/order-export.controller.ts` 及对应测试 | [创建导出任务](#create-task)、[查询导出任务](#query-task) | `task-UT-009` 至 `011` | 步骤 2、3 的服务契约；创建请求的用户标识映射需先确认。controller 单测使用服务替身 | ⏳ 待实现 |
+| 6 | 运行全量回归并核对验收条件 | “8.3 测试文件与数据”所列文件 | [8. 测试设计](#8-测试设计)、[10. 验收标准](#10-验收标准) | 回归 `task-UT-001` 至 `017` | 步骤 1 至 5 | ⏳ 待实现 |
 
 ## 10. 验收标准
 
