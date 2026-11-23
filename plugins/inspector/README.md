@@ -36,7 +36,7 @@ claude --plugin-dir ./plugins/inspector
 
 ## 职责边界
 
-developer 交验必须新建不继承开发对话的 validator 子 agent；用户在干净会话直接调用 validator 时无需另建子 agent。实现与测试问题交 developer，设计缺项交 architect；验证角色不修改业务实现、持久测试、预期或验收标准。技术验收不代替用户的产品验收和发布决定。同上下文或隔离依据不足时只交付复核结果，不出具独立验收结论或回写规范报告及设计状态。
+developer 交验必须新建不继承开发对话的 validator 子 agent；用户在干净会话直接调用 validator 时无需另建子 agent。实现与测试问题交 developer，设计缺项交 architect；验证角色不修改业务实现、持久测试、预期或验收标准。技术验收不代替用户的产品验收和发布决定。在开发会话直接调用 validator 或无法确认当前会话独立性时，validator 启动干净子代理并等待独立验收结论。用户明确只要复核时就地检查；无法隔离时说明未执行独立验收，均不写报告或状态。
 
 ## Structure
 
