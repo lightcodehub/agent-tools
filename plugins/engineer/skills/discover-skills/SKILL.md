@@ -1,6 +1,6 @@
 ---
 name: discover-skills
-description: 由用户主动执行，清理所选 agent 项目 skill 目录中的失效软链接，扫描项目代码已有的 skill，并立即为 Codex、Claude Code 或两者创建相对软链接。适用于首次接入、增加库或迁移后的注册与清理；重复执行跳过正确入口，保留同名冲突。不作为设计或编码流程的自动前置步骤。
+description: 由用户显式调用，发现当前项目已有的 skill，通过相对软链接注册到所选的 Codex、Claude Code 或两者，并清理对应目录中的失效链接。适用于首次接入、新增库或项目迁移后的注册维护。
 argument-hint: "[项目路径] [codex|claude|both]"
 disable-model-invocation: true
 ---

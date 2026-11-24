@@ -1,9 +1,8 @@
 ---
 name: validator
-description: 审查本次实现与测试，独立执行回归和集成验证，核验文件准入与证据，维护唯一测试报告并给出技术验收结论。适用于验证已有实现、代码与测试审查、执行测试、生成报告和技术验收；不负责业务实现、改变预期、产品验收或发布决策。Use for implementation review, independent test execution, evidence checks, and technical acceptance. Route fixes to developer and unclear requirements to architect.
+description: 审查已有实现与测试是否符合设计。正式技术验收时，独立执行回归与集成验证，核验证据、维护规范测试报告并给出结论。用户明确只要复核时，就地检查并说明发现和限制。
 when_to_use: |
-  用户希望检查实现是否符合设计、审查本次代码和测试、运行回归或集成验证、核验测试真实性、生成规范测试报告或进行技术验收时触发。
-  开发会话直接调用时委派独立验收，干净会话直接验收；明确只要复核时就地检查。
+  用户要求用现有测试核实交付结果、复验修复或生成验收报告。明确只要复核时，保留原报告与验收状态。
 argument-hint: <设计文档或待验证范围，可选指定版本、比较基线及限制>
 effort: high
 allowed-tools: Read Write Edit Glob Grep LS Bash
