@@ -1,7 +1,7 @@
 {
   "name": "designer",
-  "description": "Design plugin — architecture design and future design skills (UI, product, etc.).",
-  "version": "1.8.6",
+  "description": "Design plugin with architecture design skills for reading code and producing implementation-ready design documents.",
+  "version": "1.10.4",
   "author": {
     "name": "lightcodehub"
   },

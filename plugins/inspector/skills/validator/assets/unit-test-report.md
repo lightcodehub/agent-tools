@@ -57,10 +57,10 @@
 
 ### A.2 模块汇总
 
-| 模块 | 设计文档 | 总数 | 通过 | 失败 | 跳过 | 未实现 | 未运行 | 状态 |
-| --- | --- | --: | --: | --: | --: | --: | --: | --- |
-| {模块A} | [设计文档](../design-doc/{module-a}/index.md) | {N} | {N} | {N} | {N} | {N} | {N} | PASS / FAIL / INCOMPLETE |
-| {模块B} | [设计文档](../design-doc/{module-b}/index.md) | {N} | {N} | {N} | {N} | {N} | {N} | PASS / FAIL / INCOMPLETE |
+| 模块 | 总数 | 通过 | 失败 | 跳过 | 未实现 | 未运行 | 状态 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| [{模块A}](../design-doc/{module-a}/index.md) | {N} | {N} | {N} | {N} | {N} | {N} | PASS / FAIL / INCOMPLETE |
+| [{模块B}](../design-doc/{module-b}/index.md) | {N} | {N} | {N} | {N} | {N} | {N} | PASS / FAIL / INCOMPLETE |
 
 ### A.3 测试结果
 
@@ -72,10 +72,10 @@
 
 | 用例编号 | 测试用例 | 类型 | 测试文件 | 测试名称 | 结果 | 耗时 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `{module-a}-UT-001` | {正常路径} | happy path | `{path}` | `{框架中的测试名称}` | PASS | {N} ms | — |
-| `{module-a}-UT-002` | {边界场景} | boundary | `{path}` | `{框架中的测试名称}` | FAIL | {N} ms | 见 §A.4 |
-| `{module-a}-UT-003` | {异常场景} | error | `{path}` | `{框架中的测试名称}` | SKIPPED / NOT_IMPLEMENTED / NOT_RUN | — | {原因} |
-| `{已有补充编号或 —}` | {补充用例} | happy path / boundary / error | `{path}` | `{框架中的测试名称}` | PASS / FAIL / SKIPPED / NOT_RUN | {N} ms | 设计外补充用例 |
+| `{module-a}-UT-001` | {正常路径} | 正常 | `{path}` | `{框架中的测试名称}` | PASS | {N} ms | — |
+| `{module-a}-UT-002` | {边界场景} | 边界 | `{path}` | `{框架中的测试名称}` | FAIL | {N} ms | 见 §A.4 |
+| `{module-a}-UT-003` | {异常场景} | 异常 | `{path}` | `{框架中的测试名称}` | SKIPPED / NOT_IMPLEMENTED / NOT_RUN | — | {原因} |
+| `{已有补充编号或 —}` | {补充用例} | {正常／边界／异常} | `{path}` | `{框架中的测试名称}` | PASS / FAIL / SKIPPED / NOT_RUN | {N} ms | 设计外补充用例 |
 
 #### A.3.2 {模块B}
 
